@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.erkang.integration.rtc.RTCTokenPropertyTest" time="2.729" tests="4" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="17"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.class.path" value="D:\GraduationProject\backend\target\test-classes;D:\GraduationProject\backend\target\classes;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.1\spring-boot-starter-web-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.1\spring-boot-starter-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot\3.2.1\spring-boot-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.1\spring-boot-starter-logging-3.2.1.jar;C:\Users\86183\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\86183\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\86183\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\86183\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\86183\.m2\repository\org\slf4j\jul-to-slf4j\2.0.9\jul-to-slf4j-2.0.9.jar;C:\Users\86183\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\86183\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.1\spring-boot-starter-json-3.2.1.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.3\jackson-datatype-jdk8-2.15.3.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.3\jackson-datatype-jsr310-2.15.3.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.3\jackson-module-parameter-names-2.15.3.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.1\spring-boot-starter-tomcat-3.2.1.jar;C:\Users\86183\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.17\tomcat-embed-core-10.1.17.jar;C:\Users\86183\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.17\tomcat-embed-websocket-10.1.17.jar;C:\Users\86183\.m2\repository\org\springframework\spring-web\6.1.2\spring-web-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-beans\6.1.2\spring-beans-6.1.2.jar;C:\Users\86183\.m2\repository\io\micrometer\micrometer-observation\1.12.1\micrometer-observation-1.12.1.jar;C:\Users\86183\.m2\repository\io\micrometer\micrometer-commons\1.12.1\micrometer-commons-1.12.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-webmvc\6.1.2\spring-webmvc-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-context\6.1.2\spring-context-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-expression\6.1.2\spring-expression-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\security\spring-security-crypto\6.2.1\spring-security-crypto-6.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.1\spring-boot-starter-validation-3.2.1.jar;C:\Users\86183\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.17\tomcat-embed-el-10.1.17.jar;C:\Users\86183\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\86183\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\86183\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\86183\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-websocket\3.2.1\spring-boot-starter-websocket-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-messaging\6.1.2\spring-messaging-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-websocket\6.1.2\spring-websocket-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.1\spring-boot-starter-data-redis-3.2.1.jar;C:\Users\86183\.m2\repository\io\lettuce\lettuce-core\6.3.0.RELEASE\lettuce-core-6.3.0.RELEASE.jar;C:\Users\86183\.m2\repository\io\netty\netty-common\4.1.104.Final\netty-common-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-handler\4.1.104.Final\netty-handler-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-resolver\4.1.104.Final\netty-resolver-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-buffer\4.1.104.Final\netty-buffer-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.104.Final\netty-transport-native-unix-common-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-codec\4.1.104.Final\netty-codec-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-transport\4.1.104.Final\netty-transport-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\projectreactor\reactor-core\3.6.1\reactor-core-3.6.1.jar;C:\Users\86183\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\86183\.m2\repository\org\springframework\data\spring-data-redis\3.2.1\spring-data-redis-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.1\spring-data-keyvalue-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\data\spring-data-commons\3.2.1\spring-data-commons-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-tx\6.1.2\spring-tx-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-oxm\6.1.2\spring-oxm-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-context-support\6.1.2\spring-context-support-6.1.2.jar;C:\Users\86183\.m2\repository\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.1\spring-boot-starter-aop-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-aop\6.1.2\spring-aop-6.1.2.jar;C:\Users\86183\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-spring-boot3-starter\3.5.5\mybatis-plus-spring-boot3-starter-3.5.5.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus\3.5.5\mybatis-plus-3.5.5.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-core\3.5.5\mybatis-plus-core-3.5.5.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-annotation\3.5.5\mybatis-plus-annotation-3.5.5.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-extension\3.5.5\mybatis-plus-extension-3.5.5.jar;C:\Users\86183\.m2\repository\org\mybatis\mybatis\3.5.15\mybatis-3.5.15.jar;C:\Users\86183\.m2\repository\com\github\jsqlparser\jsqlparser\4.6\jsqlparser-4.6.jar;C:\Users\86183\.m2\repository\org\mybatis\mybatis-spring\3.0.3\mybatis-spring-3.0.3.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-spring-boot-autoconfigure\3.5.5\mybatis-plus-spring-boot-autoconfigure-3.5.5.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.1\spring-boot-autoconfigure-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.1\spring-boot-starter-jdbc-3.2.1.jar;C:\Users\86183\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-jdbc\6.1.2\spring-jdbc-6.1.2.jar;C:\Users\86183\.m2\repository\com\mysql\mysql-connector-j\8.1.0\mysql-connector-j-8.1.0.jar;C:\Users\86183\.m2\repository\io\jsonwebtoken\jjwt-api\0.12.3\jjwt-api-0.12.3.jar;C:\Users\86183\.m2\repository\io\jsonwebtoken\jjwt-impl\0.12.3\jjwt-impl-0.12.3.jar;C:\Users\86183\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.12.3\jjwt-jackson-0.12.3.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.3\jackson-databind-2.15.3.jar;C:\Users\86183\.m2\repository\io\minio\minio\8.5.7\minio-8.5.7.jar;C:\Users\86183\.m2\repository\com\carrotsearch\thirdparty\simple-xml-safe\2.7.1\simple-xml-safe-2.7.1.jar;C:\Users\86183\.m2\repository\com\google\guava\guava\32.1.3-jre\guava-32.1.3-jre.jar;C:\Users\86183\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\86183\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\86183\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\86183\.m2\repository\org\checkerframework\checker-qual\3.37.0\checker-qual-3.37.0.jar;C:\Users\86183\.m2\repository\com\google\errorprone\error_prone_annotations\2.21.1\error_prone_annotations-2.21.1.jar;C:\Users\86183\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\86183\.m2\repository\com\squareup\okhttp3\okhttp\4.12.0\okhttp-4.12.0.jar;C:\Users\86183\.m2\repository\com\squareup\okio\okio\3.6.0\okio-3.6.0.jar;C:\Users\86183\.m2\repository\com\squareup\okio\okio-jvm\3.6.0\okio-jvm-3.6.0.jar;C:\Users\86183\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-common\1.9.21\kotlin-stdlib-common-1.9.21.jar;C:\Users\86183\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-jdk8\1.9.21\kotlin-stdlib-jdk8-1.9.21.jar;C:\Users\86183\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib\1.9.21\kotlin-stdlib-1.9.21.jar;C:\Users\86183\.m2\repository\org\jetbrains\annotations\13.0\annotations-13.0.jar;C:\Users\86183\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-jdk7\1.9.21\kotlin-stdlib-jdk7-1.9.21.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.3\jackson-annotations-2.15.3.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.3\jackson-core-2.15.3.jar;C:\Users\86183\.m2\repository\org\bouncycastle\bcprov-jdk18on\1.76\bcprov-jdk18on-1.76.jar;C:\Users\86183\.m2\repository\org\apache\commons\commons-compress\1.24.0\commons-compress-1.24.0.jar;C:\Users\86183\.m2\repository\org\xerial\snappy\snappy-java\1.1.10.5\snappy-java-1.1.10.5.jar;C:\Users\86183\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.3.0\springdoc-openapi-starter-webmvc-ui-2.3.0.jar;C:\Users\86183\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.3.0\springdoc-openapi-starter-webmvc-api-2.3.0.jar;C:\Users\86183\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.3.0\springdoc-openapi-starter-common-2.3.0.jar;C:\Users\86183\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.19\swagger-core-jakarta-2.2.19.jar;C:\Users\86183\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\86183\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.19\swagger-annotations-jakarta-2.2.19.jar;C:\Users\86183\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.19\swagger-models-jakarta-2.2.19.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.3\jackson-dataformat-yaml-2.15.3.jar;C:\Users\86183\.m2\repository\org\webjars\swagger-ui\5.10.3\swagger-ui-5.10.3.jar;C:\Users\86183\.m2\repository\org\projectlombok\lombok\1.18.30\lombok-1.18.30.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.1\spring-boot-starter-test-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-test\3.2.1\spring-boot-test-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.1\spring-boot-test-autoconfigure-3.2.1.jar;C:\Users\86183\.m2\repository\com\jayway\jsonpath\json-path\2.8.0\json-path-2.8.0.jar;C:\Users\86183\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\86183\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\86183\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\86183\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\86183\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\86183\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\86183\.m2\repository\net\bytebuddy\byte-buddy\1.14.10\byte-buddy-1.14.10.jar;C:\Users\86183\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\86183\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\86183\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.1\junit-jupiter-5.10.1.jar;C:\Users\86183\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;C:\Users\86183\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.1\junit-jupiter-params-5.10.1.jar;C:\Users\86183\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;C:\Users\86183\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\86183\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.10\byte-buddy-agent-1.14.10.jar;C:\Users\86183\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\86183\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\86183\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\86183\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-core\6.1.2\spring-core-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-jcl\6.1.2\spring-jcl-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-test\6.1.2\spring-test-6.1.2.jar;C:\Users\86183\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik\1.8.2\jqwik-1.8.2.jar;C:\Users\86183\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik-api\1.8.2\jqwik-api-1.8.2.jar;C:\Users\86183\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\86183\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik-web\1.8.2\jqwik-web-1.8.2.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik-time\1.8.2\jqwik-time-1.8.2.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik-engine\1.8.2\jqwik-engine-1.8.2.jar;C:\Users\86183\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Asia/Ulaanbaatar"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-17\bin"/>
+    <property name="sun.java.command" value="C:\Users\86183\AppData\Local\Temp\surefire16170033442136980161\surefirebooter-20251231234631519_3.jar C:\Users\86183\AppData\Local\Temp\surefire16170033442136980161 2025-12-31T23-46-31_219-jvmRun1 surefire-20251231234631519_1tmp surefire_0-20251231234631519_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\GraduationProject\backend\target\test-classes;D:\GraduationProject\backend\target\classes;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.1\spring-boot-starter-web-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.1\spring-boot-starter-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot\3.2.1\spring-boot-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.1\spring-boot-starter-logging-3.2.1.jar;C:\Users\86183\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\86183\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\86183\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\86183\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\86183\.m2\repository\org\slf4j\jul-to-slf4j\2.0.9\jul-to-slf4j-2.0.9.jar;C:\Users\86183\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\86183\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.1\spring-boot-starter-json-3.2.1.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.3\jackson-datatype-jdk8-2.15.3.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.3\jackson-datatype-jsr310-2.15.3.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.3\jackson-module-parameter-names-2.15.3.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.1\spring-boot-starter-tomcat-3.2.1.jar;C:\Users\86183\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.17\tomcat-embed-core-10.1.17.jar;C:\Users\86183\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.17\tomcat-embed-websocket-10.1.17.jar;C:\Users\86183\.m2\repository\org\springframework\spring-web\6.1.2\spring-web-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-beans\6.1.2\spring-beans-6.1.2.jar;C:\Users\86183\.m2\repository\io\micrometer\micrometer-observation\1.12.1\micrometer-observation-1.12.1.jar;C:\Users\86183\.m2\repository\io\micrometer\micrometer-commons\1.12.1\micrometer-commons-1.12.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-webmvc\6.1.2\spring-webmvc-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-context\6.1.2\spring-context-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-expression\6.1.2\spring-expression-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\security\spring-security-crypto\6.2.1\spring-security-crypto-6.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.1\spring-boot-starter-validation-3.2.1.jar;C:\Users\86183\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.17\tomcat-embed-el-10.1.17.jar;C:\Users\86183\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\86183\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\86183\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\86183\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-websocket\3.2.1\spring-boot-starter-websocket-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-messaging\6.1.2\spring-messaging-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-websocket\6.1.2\spring-websocket-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.1\spring-boot-starter-data-redis-3.2.1.jar;C:\Users\86183\.m2\repository\io\lettuce\lettuce-core\6.3.0.RELEASE\lettuce-core-6.3.0.RELEASE.jar;C:\Users\86183\.m2\repository\io\netty\netty-common\4.1.104.Final\netty-common-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-handler\4.1.104.Final\netty-handler-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-resolver\4.1.104.Final\netty-resolver-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-buffer\4.1.104.Final\netty-buffer-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.104.Final\netty-transport-native-unix-common-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-codec\4.1.104.Final\netty-codec-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\netty\netty-transport\4.1.104.Final\netty-transport-4.1.104.Final.jar;C:\Users\86183\.m2\repository\io\projectreactor\reactor-core\3.6.1\reactor-core-3.6.1.jar;C:\Users\86183\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\86183\.m2\repository\org\springframework\data\spring-data-redis\3.2.1\spring-data-redis-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.1\spring-data-keyvalue-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\data\spring-data-commons\3.2.1\spring-data-commons-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-tx\6.1.2\spring-tx-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-oxm\6.1.2\spring-oxm-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-context-support\6.1.2\spring-context-support-6.1.2.jar;C:\Users\86183\.m2\repository\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.1\spring-boot-starter-aop-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-aop\6.1.2\spring-aop-6.1.2.jar;C:\Users\86183\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-spring-boot3-starter\3.5.5\mybatis-plus-spring-boot3-starter-3.5.5.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus\3.5.5\mybatis-plus-3.5.5.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-core\3.5.5\mybatis-plus-core-3.5.5.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-annotation\3.5.5\mybatis-plus-annotation-3.5.5.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-extension\3.5.5\mybatis-plus-extension-3.5.5.jar;C:\Users\86183\.m2\repository\org\mybatis\mybatis\3.5.15\mybatis-3.5.15.jar;C:\Users\86183\.m2\repository\com\github\jsqlparser\jsqlparser\4.6\jsqlparser-4.6.jar;C:\Users\86183\.m2\repository\org\mybatis\mybatis-spring\3.0.3\mybatis-spring-3.0.3.jar;C:\Users\86183\.m2\repository\com\baomidou\mybatis-plus-spring-boot-autoconfigure\3.5.5\mybatis-plus-spring-boot-autoconfigure-3.5.5.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.1\spring-boot-autoconfigure-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.1\spring-boot-starter-jdbc-3.2.1.jar;C:\Users\86183\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-jdbc\6.1.2\spring-jdbc-6.1.2.jar;C:\Users\86183\.m2\repository\com\mysql\mysql-connector-j\8.1.0\mysql-connector-j-8.1.0.jar;C:\Users\86183\.m2\repository\io\jsonwebtoken\jjwt-api\0.12.3\jjwt-api-0.12.3.jar;C:\Users\86183\.m2\repository\io\jsonwebtoken\jjwt-impl\0.12.3\jjwt-impl-0.12.3.jar;C:\Users\86183\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.12.3\jjwt-jackson-0.12.3.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.3\jackson-databind-2.15.3.jar;C:\Users\86183\.m2\repository\io\minio\minio\8.5.7\minio-8.5.7.jar;C:\Users\86183\.m2\repository\com\carrotsearch\thirdparty\simple-xml-safe\2.7.1\simple-xml-safe-2.7.1.jar;C:\Users\86183\.m2\repository\com\google\guava\guava\32.1.3-jre\guava-32.1.3-jre.jar;C:\Users\86183\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\86183\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\86183\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\86183\.m2\repository\org\checkerframework\checker-qual\3.37.0\checker-qual-3.37.0.jar;C:\Users\86183\.m2\repository\com\google\errorprone\error_prone_annotations\2.21.1\error_prone_annotations-2.21.1.jar;C:\Users\86183\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\86183\.m2\repository\com\squareup\okhttp3\okhttp\4.12.0\okhttp-4.12.0.jar;C:\Users\86183\.m2\repository\com\squareup\okio\okio\3.6.0\okio-3.6.0.jar;C:\Users\86183\.m2\repository\com\squareup\okio\okio-jvm\3.6.0\okio-jvm-3.6.0.jar;C:\Users\86183\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-common\1.9.21\kotlin-stdlib-common-1.9.21.jar;C:\Users\86183\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-jdk8\1.9.21\kotlin-stdlib-jdk8-1.9.21.jar;C:\Users\86183\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib\1.9.21\kotlin-stdlib-1.9.21.jar;C:\Users\86183\.m2\repository\org\jetbrains\annotations\13.0\annotations-13.0.jar;C:\Users\86183\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-jdk7\1.9.21\kotlin-stdlib-jdk7-1.9.21.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.3\jackson-annotations-2.15.3.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.3\jackson-core-2.15.3.jar;C:\Users\86183\.m2\repository\org\bouncycastle\bcprov-jdk18on\1.76\bcprov-jdk18on-1.76.jar;C:\Users\86183\.m2\repository\org\apache\commons\commons-compress\1.24.0\commons-compress-1.24.0.jar;C:\Users\86183\.m2\repository\org\xerial\snappy\snappy-java\1.1.10.5\snappy-java-1.1.10.5.jar;C:\Users\86183\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.3.0\springdoc-openapi-starter-webmvc-ui-2.3.0.jar;C:\Users\86183\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.3.0\springdoc-openapi-starter-webmvc-api-2.3.0.jar;C:\Users\86183\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.3.0\springdoc-openapi-starter-common-2.3.0.jar;C:\Users\86183\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.19\swagger-core-jakarta-2.2.19.jar;C:\Users\86183\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\86183\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.19\swagger-annotations-jakarta-2.2.19.jar;C:\Users\86183\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.19\swagger-models-jakarta-2.2.19.jar;C:\Users\86183\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.3\jackson-dataformat-yaml-2.15.3.jar;C:\Users\86183\.m2\repository\org\webjars\swagger-ui\5.10.3\swagger-ui-5.10.3.jar;C:\Users\86183\.m2\repository\org\projectlombok\lombok\1.18.30\lombok-1.18.30.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.1\spring-boot-starter-test-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-test\3.2.1\spring-boot-test-3.2.1.jar;C:\Users\86183\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.1\spring-boot-test-autoconfigure-3.2.1.jar;C:\Users\86183\.m2\repository\com\jayway\jsonpath\json-path\2.8.0\json-path-2.8.0.jar;C:\Users\86183\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\86183\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\86183\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\86183\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\86183\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\86183\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\86183\.m2\repository\net\bytebuddy\byte-buddy\1.14.10\byte-buddy-1.14.10.jar;C:\Users\86183\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\86183\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\86183\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.1\junit-jupiter-5.10.1.jar;C:\Users\86183\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;C:\Users\86183\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.1\junit-jupiter-params-5.10.1.jar;C:\Users\86183\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;C:\Users\86183\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\86183\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.10\byte-buddy-agent-1.14.10.jar;C:\Users\86183\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\86183\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\86183\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\86183\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\86183\.m2\repository\org\springframework\spring-core\6.1.2\spring-core-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-jcl\6.1.2\spring-jcl-6.1.2.jar;C:\Users\86183\.m2\repository\org\springframework\spring-test\6.1.2\spring-test-6.1.2.jar;C:\Users\86183\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik\1.8.2\jqwik-1.8.2.jar;C:\Users\86183\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik-api\1.8.2\jqwik-api-1.8.2.jar;C:\Users\86183\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\86183\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik-web\1.8.2\jqwik-web-1.8.2.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik-time\1.8.2\jqwik-time-1.8.2.jar;C:\Users\86183\.m2\repository\net\jqwik\jqwik-engine\1.8.2\jqwik-engine-1.8.2.jar;C:\Users\86183\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\86183"/>
+    <property name="user.language" value="zh"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2024-04-16"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-17"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\GraduationProject\backend"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\86183\AppData\Local\Temp\surefire16170033442136980161\surefirebooter-20251231234631519_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="17.0.11+7-LTS-207"/>
+    <property name="user.name" value="poppy"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="GBK"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\86183\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\86183\AppData\Local\Temp\"/>
+    <property name="java.version" value="17.0.11"/>
+    <property name="user.dir" value="D:\GraduationProject\backend"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="GBK"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-17\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;D:\Program Files\VMware\VMware Workstation\bin\;C:\Program Files\Java\jdk-17\bin;D:\Program Files\MySQL\MySQL Server 8.0\bin;D:\app\poppy\product\11.2.0\dbhome_1\bin;D:\app1\poppy\product\11.2.0\dbhome_2\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;D:\develop\apache-maven-3.6.0\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Users\86183\AppData\Local\Microsoft\WindowsApps;D:\LenovoSoftstore\Install\QQliuxidating\QQGameTempest\Hall.57821\;D:\作业\Microsoft VS Code\bin;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.2.4\bin;D:\PyCharm\PyCharm Community Edition 2023.2\bin;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Git\cmd;D:\tomcat\bin;D:\tomcat\lib：;%JAVA_PATH%\bin;C:\Program Files\Java\jdk-17\bin;D:\java_evn\apache-maven-3.8.9\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\wangyi\xinjian\chromedriver-win64;D:\java_evn\common;D:\java_evn\nodejs\node_global\node_modules;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;D:\app\poppy\product\11.2.0\dbhome_1\bin;C:\Program Files\dotnet\;D:\java_evn\bin;D:\java_evn\Redis-x64-5.0.14.1\;D:\java_evn\apache-jmeter-5.6.3\bin;C:\Program Files\Docker\Docker\resources\bin;D:\java_evn\cursor\resources\app\bin;D:\java_evn\nodejs\node_global;D:\java_evn\nodejs\;C:\Program Files\Java\jdk-17\bin;D:\Program Files\MySQL\MySQL Server 8.0\bin;D:\app\poppy\product\11.2.0\dbhome_1\bin;D:\app1\poppy\product\11.2.0\dbhome_2\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;D:\develop\apache-maven-3.6.0\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Users\86183\AppData\Local\Microsoft\WindowsApps;D:\LenovoSoftstore\Install\QQliuxidating\QQGameTempest\Hall.57821\;D:\作业\Microsoft VS Code\;;D:\java_evn\IntelliJ IDEA 2025.1.3\bin;;D:\java_evn\Microsoft VS Code\bin;D:\php_evn\PhpStorm 2025.1.1\bin;;C:\Users\86183\AppData\Roaming\npm;D:\Antigravity\Antigravity\bin;D:\java_evn\Kiro\bin;D:\java_evn\Windsurf\bin;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="17.0.11+7-LTS-207"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="61.0"/>
+  </properties>
+  <testcase name="tokenShouldContainRequiredInfo" classname="com.erkang.integration.rtc.RTCTokenPropertyTest" time="1.838">
+    <system-out><![CDATA[23:46:44.335 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=884, userId=136685, roomId=room_884
+23:46:44.338 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=98, userId=152704, roomId=room_98
+23:46:44.339 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=58, userId=125, roomId=room_58
+23:46:44.341 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=600475, userId=16982, roomId=room_600475
+23:46:44.341 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=2, roomId=room_2
+23:46:44.342 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=87310, userId=166, roomId=room_87310
+23:46:44.343 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=39612, userId=8, roomId=room_39612
+23:46:44.345 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=33776, userId=182, roomId=room_33776
+23:46:44.346 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=2, roomId=room_2
+23:46:44.347 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=815031, roomId=room_1000000
+23:46:44.348 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1, roomId=room_2
+23:46:44.351 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=66, userId=797352, roomId=room_66
+23:46:44.352 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=26811, userId=892040, roomId=room_26811
+23:46:44.353 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1, roomId=room_2
+23:46:44.354 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=461, userId=1811, roomId=room_461
+23:46:44.358 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=9983, roomId=room_1
+23:46:44.359 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=34475, userId=4501, roomId=room_34475
+23:46:44.360 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=221, userId=76, roomId=room_221
+23:46:44.360 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=16784, userId=2221, roomId=room_16784
+23:46:44.362 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=147571, userId=18, roomId=room_147571
+23:46:44.364 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1000000, roomId=room_2
+23:46:44.365 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1000000, roomId=room_2
+23:46:44.366 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=999999, roomId=room_2
+23:46:44.367 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=340266, userId=930869, roomId=room_340266
+23:46:44.368 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=999999, roomId=room_2
+23:46:44.369 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=2, roomId=room_1
+23:46:44.370 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=730, userId=116330, roomId=room_730
+23:46:44.371 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=132129, userId=158, roomId=room_132129
+23:46:44.371 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=72, userId=47, roomId=room_72
+23:46:44.372 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=14555, userId=296412, roomId=room_14555
+23:46:44.374 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=85137, userId=2, roomId=room_85137
+23:46:44.375 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=62208, userId=23, roomId=room_62208
+23:46:44.377 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2565, userId=16, roomId=room_2565
+23:46:44.378 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=988, userId=42, roomId=room_988
+23:46:44.379 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=50707, userId=17, roomId=room_50707
+23:46:44.380 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=17, userId=66854, roomId=room_17
+23:46:44.381 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=59525, userId=9830, roomId=room_59525
+23:46:44.382 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=3, userId=411, roomId=room_3
+23:46:44.383 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=2, roomId=room_1
+23:46:44.383 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=5773, userId=154, roomId=room_5773
+23:46:44.384 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=172, userId=18284, roomId=room_172
+23:46:44.385 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2031, userId=2, roomId=room_2031
+23:46:44.386 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1502, userId=9, roomId=room_1502
+23:46:44.387 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=792, userId=219, roomId=room_792
+23:46:44.388 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=16017, userId=8, roomId=room_16017
+23:46:44.388 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=15029, userId=215, roomId=room_15029
+23:46:44.390 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=5910, userId=16216, roomId=room_5910
+23:46:44.391 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=644147, userId=1733, roomId=room_644147
+23:46:44.391 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=9, userId=76, roomId=room_9
+23:46:44.392 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=79862, userId=566, roomId=room_79862
+23:46:44.393 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=3, userId=230, roomId=room_3
+23:46:44.394 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=37, userId=7, roomId=room_37
+23:46:44.396 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=21, userId=14, roomId=room_21
+23:46:44.396 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1, roomId=room_1
+23:46:44.397 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=9679, userId=2, roomId=room_9679
+23:46:44.397 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=17291, userId=169685, roomId=room_17291
+23:46:44.399 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=4, userId=10, roomId=room_4
+23:46:44.400 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=626226, userId=5, roomId=room_626226
+23:46:44.401 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=6096, userId=31042, roomId=room_6096
+23:46:44.401 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=279854, userId=53, roomId=room_279854
+23:46:44.402 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7817, userId=1641, roomId=room_7817
+23:46:44.403 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1, roomId=room_1
+23:46:44.404 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=17345, userId=117215, roomId=room_17345
+23:46:44.406 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=999999, userId=460, roomId=room_999999
+23:46:44.407 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=410, userId=640, roomId=room_410
+23:46:44.408 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=4, userId=1381, roomId=room_4
+23:46:44.408 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=58, userId=1000000, roomId=room_58
+23:46:44.409 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=247522, userId=5017, roomId=room_247522
+23:46:44.409 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=875226, userId=213, roomId=room_875226
+23:46:44.410 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1000000, roomId=room_1
+23:46:44.410 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=642, userId=97513, roomId=room_642
+23:46:44.411 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=33962, userId=6445, roomId=room_33962
+23:46:44.413 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1065, userId=185, roomId=room_1065
+23:46:44.414 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=3913, userId=6, roomId=room_3913
+23:46:44.415 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=39, userId=3986, roomId=room_39
+23:46:44.415 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=285191, userId=775720, roomId=room_285191
+23:46:44.417 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1000000, roomId=room_1
+23:46:44.417 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=48, userId=4308, roomId=room_48
+23:46:44.418 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=999999, roomId=room_1
+23:46:44.418 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=633, userId=845636, roomId=room_633
+23:46:44.418 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=130549, userId=360563, roomId=room_130549
+23:46:44.419 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=657882, userId=27606, roomId=room_657882
+23:46:44.420 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=999999, roomId=room_1
+23:46:44.420 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=401, userId=3412, roomId=room_401
+23:46:44.421 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=680, userId=6, roomId=room_680
+23:46:44.421 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=8631, userId=163, roomId=room_8631
+23:46:44.421 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=311, userId=634404, roomId=room_311
+23:46:44.423 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=70, roomId=room_2
+23:46:44.423 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=82, userId=2, roomId=room_82
+23:46:44.424 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1950, userId=432, roomId=room_1950
+23:46:44.425 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1838, userId=4, roomId=room_1838
+23:46:44.425 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=10, userId=283793, roomId=room_10
+23:46:44.426 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=2, roomId=room_1000000
+23:46:44.427 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=5, userId=43, roomId=room_5
+23:46:44.427 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=2, roomId=room_1000000
+23:46:44.428 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=1, roomId=room_1000000
+23:46:44.429 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=13, userId=328, roomId=room_13
+23:46:44.429 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1773, roomId=room_2
+23:46:44.430 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1334, userId=4, roomId=room_1334
+23:46:44.430 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2276, userId=8, roomId=room_2276
+timestamp = 2025-12-31T23:46:44.431812400, RTCTokenPropertyTest:tokenShouldContainRequiredInfo = 
+                              |-----------------------jqwik-----------------------
+tries = 100                   | # of calls to property
+checks = 100                  | # of not rejected calls
+generation = RANDOMIZED       | parameters are randomly generated
+after-failure = SAMPLE_FIRST  | try previously failed sample, then previous seed
+when-fixed-seed = ALLOW       | fixing the random seed is allowed
+edge-cases#mode = MIXIN       | edge cases are mixed in
+edge-cases#total = 32         | # of all combined edge cases
+edge-cases#tried = 19         | # of edge cases tried in current run
+seed = 4748602451165977318    | random seed to reproduce generated values
+
+
+]]></system-out>
+  </testcase>
+  <testcase name="sameParametersShouldGenerateDifferentTokens" classname="com.erkang.integration.rtc.RTCTokenPropertyTest" time="0.547">
+    <system-out><![CDATA[23:46:44.440 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=412, roomId=room_7
+23:46:44.440 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=412, roomId=room_7
+23:46:44.851 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=5, userId=2, roomId=room_5
+23:46:44.851 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=5, userId=2, roomId=room_5
+23:46:44.854 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=1049, roomId=room_1000000
+23:46:44.855 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=1049, roomId=room_1000000
+23:46:44.856 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=45, userId=10, roomId=room_45
+23:46:44.858 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=45, userId=10, roomId=room_45
+23:46:44.862 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=60, userId=145922, roomId=room_60
+23:46:44.862 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=60, userId=145922, roomId=room_60
+23:46:44.865 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=730777, userId=1, roomId=room_730777
+23:46:44.866 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=730777, userId=1, roomId=room_730777
+23:46:44.867 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=6, userId=34, roomId=room_6
+23:46:44.868 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=6, userId=34, roomId=room_6
+23:46:44.870 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=95780, roomId=room_2
+23:46:44.870 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=95780, roomId=room_2
+23:46:44.874 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=265637, userId=25, roomId=room_265637
+23:46:44.875 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=265637, userId=25, roomId=room_265637
+23:46:44.877 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=28, roomId=room_1
+23:46:44.878 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=28, roomId=room_1
+23:46:44.880 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=39451, roomId=room_1
+23:46:44.881 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=39451, roomId=room_1
+23:46:44.883 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=314, userId=404, roomId=room_314
+23:46:44.885 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=314, userId=404, roomId=room_314
+23:46:44.887 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=4762, userId=1687, roomId=room_4762
+23:46:44.887 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=4762, userId=1687, roomId=room_4762
+23:46:44.889 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=2, roomId=room_2
+23:46:44.890 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=2, roomId=room_2
+23:46:44.892 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=61, roomId=room_1000000
+23:46:44.893 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=61, roomId=room_1000000
+23:46:44.897 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=11, userId=1, roomId=room_11
+23:46:44.897 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=11, userId=1, roomId=room_11
+23:46:44.899 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=7, roomId=room_2
+23:46:44.900 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=7, roomId=room_2
+23:46:44.903 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=36710, userId=32, roomId=room_36710
+23:46:44.903 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=36710, userId=32, roomId=room_36710
+23:46:44.904 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=91, userId=6045, roomId=room_91
+23:46:44.904 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=91, userId=6045, roomId=room_91
+23:46:44.906 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=1, roomId=room_7
+23:46:44.906 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=1, roomId=room_7
+23:46:44.908 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=999999, userId=475, roomId=room_999999
+23:46:44.909 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=999999, userId=475, roomId=room_999999
+23:46:44.911 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=10, userId=39851, roomId=room_10
+23:46:44.912 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=10, userId=39851, roomId=room_10
+23:46:44.915 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1, roomId=room_2
+23:46:44.915 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1, roomId=room_2
+23:46:44.917 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=10937, userId=4, roomId=room_10937
+23:46:44.918 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=10937, userId=4, roomId=room_10937
+23:46:44.919 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7508, userId=103, roomId=room_7508
+23:46:44.920 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7508, userId=103, roomId=room_7508
+23:46:44.921 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=244, userId=15, roomId=room_244
+23:46:44.923 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=244, userId=15, roomId=room_244
+23:46:44.924 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=928767, userId=807, roomId=room_928767
+23:46:44.925 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=928767, userId=807, roomId=room_928767
+23:46:44.927 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=207, userId=1, roomId=room_207
+23:46:44.927 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=207, userId=1, roomId=room_207
+23:46:44.929 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=32, userId=289, roomId=room_32
+23:46:44.929 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=32, userId=289, roomId=room_32
+23:46:44.930 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1728, userId=16, roomId=room_1728
+23:46:44.930 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1728, userId=16, roomId=room_1728
+23:46:44.932 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=8, userId=1, roomId=room_8
+23:46:44.933 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=8, userId=1, roomId=room_8
+23:46:44.936 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=1942, roomId=room_7
+23:46:44.936 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=1942, roomId=room_7
+23:46:44.938 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1763, userId=1563, roomId=room_1763
+23:46:44.938 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1763, userId=1563, roomId=room_1763
+23:46:44.940 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=5298, userId=5, roomId=room_5298
+23:46:44.940 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=5298, userId=5, roomId=room_5298
+23:46:44.943 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=116477, userId=11, roomId=room_116477
+23:46:44.943 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=116477, userId=11, roomId=room_116477
+23:46:44.946 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1555, userId=3, roomId=room_1555
+23:46:44.946 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1555, userId=3, roomId=room_1555
+23:46:44.947 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1000000, roomId=room_2
+23:46:44.948 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1000000, roomId=room_2
+23:46:44.949 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=17300, userId=955397, roomId=room_17300
+23:46:44.949 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=17300, userId=955397, roomId=room_17300
+23:46:44.951 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=999999, roomId=room_2
+23:46:44.951 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=999999, roomId=room_2
+23:46:44.954 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=20, userId=1489, roomId=room_20
+23:46:44.955 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=20, userId=1489, roomId=room_20
+23:46:44.956 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=410, userId=7, roomId=room_410
+23:46:44.956 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=410, userId=7, roomId=room_410
+23:46:44.957 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=58, userId=2, roomId=room_58
+23:46:44.958 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=58, userId=2, roomId=room_58
+23:46:44.960 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=39463, userId=1000000, roomId=room_39463
+23:46:44.960 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=39463, userId=1000000, roomId=room_39463
+23:46:44.962 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=19, userId=2, roomId=room_19
+23:46:44.963 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=19, userId=2, roomId=room_19
+23:46:44.964 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=36634, userId=76, roomId=room_36634
+23:46:44.965 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=36634, userId=76, roomId=room_36634
+23:46:44.966 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=426, userId=1, roomId=room_426
+23:46:44.966 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=426, userId=1, roomId=room_426
+23:46:44.969 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=2, roomId=room_1
+23:46:44.969 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=2, roomId=room_1
+23:46:44.971 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=378504, userId=10801, roomId=room_378504
+23:46:44.972 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=378504, userId=10801, roomId=room_378504
+23:46:44.974 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=384885, userId=1895, roomId=room_384885
+23:46:44.974 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=384885, userId=1895, roomId=room_384885
+23:46:44.977 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1685, userId=1427, roomId=room_1685
+23:46:44.977 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1685, userId=1427, roomId=room_1685
+timestamp = 2025-12-31T23:46:44.978936300, RTCTokenPropertyTest:sameParametersShouldGenerateDifferentTokens = 
+                              |-----------------------jqwik-----------------------
+tries = 50                    | # of calls to property
+checks = 50                   | # of not rejected calls
+generation = RANDOMIZED       | parameters are randomly generated
+after-failure = SAMPLE_FIRST  | try previously failed sample, then previous seed
+when-fixed-seed = ALLOW       | fixing the random seed is allowed
+edge-cases#mode = MIXIN       | edge cases are mixed in
+edge-cases#total = 16         | # of all combined edge cases
+edge-cases#tried = 5          | # of edge cases tried in current run
+seed = -1972729575102134112   | random seed to reproduce generated values
+
+
+]]></system-out>
+  </testcase>
+  <testcase name="tokenShouldBeBoundToConsultationAndUser" classname="com.erkang.integration.rtc.RTCTokenPropertyTest" time="0.224">
+    <system-out><![CDATA[23:46:44.986 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=838673, roomId=room_2
+23:46:44.988 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=49946, userId=13927, roomId=room_49946
+23:46:44.991 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=164, userId=8, roomId=room_164
+23:46:44.994 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7456, userId=164208, roomId=room_7456
+23:46:44.997 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=2, roomId=room_2
+23:46:44.999 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=2, roomId=room_2
+23:46:45.001 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=330437, roomId=room_2
+23:46:45.004 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=23, userId=3, roomId=room_23
+23:46:45.006 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=70, userId=23, roomId=room_70
+23:46:45.010 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=13, userId=146737, roomId=room_13
+23:46:45.013 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=6, userId=867444, roomId=room_6
+23:46:45.015 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=8377, userId=545, roomId=room_8377
+23:46:45.018 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=238, userId=17987, roomId=room_238
+23:46:45.020 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1712, userId=5167, roomId=room_1712
+23:46:45.022 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=461173, userId=3, roomId=room_461173
+23:46:45.027 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=39261, userId=3039, roomId=room_39261
+23:46:45.030 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=6188, userId=1694, roomId=room_6188
+23:46:45.032 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=188, userId=19877, roomId=room_188
+23:46:45.034 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=144290, userId=122069, roomId=room_144290
+23:46:45.037 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=69861, userId=2, roomId=room_69861
+23:46:45.039 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=36, userId=6, roomId=room_36
+23:46:45.041 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=14454, roomId=room_1
+23:46:45.043 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=97247, userId=46, roomId=room_97247
+23:46:45.045 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=8, userId=220, roomId=room_8
+23:46:45.048 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=5453, userId=3, roomId=room_5453
+23:46:45.050 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=478659, userId=13343, roomId=room_478659
+23:46:45.052 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=999999, userId=662, roomId=room_999999
+23:46:45.055 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=582, roomId=room_7
+23:46:45.057 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=75, userId=13752, roomId=room_75
+23:46:45.060 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=288, userId=71, roomId=room_288
+23:46:45.062 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=25, userId=22, roomId=room_25
+23:46:45.064 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=8143, userId=62, roomId=room_8143
+23:46:45.066 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=14258, roomId=room_1
+23:46:45.069 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1, roomId=room_2
+23:46:45.071 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=4192, userId=24, roomId=room_4192
+23:46:45.072 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1, roomId=room_2
+23:46:45.074 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1000000, roomId=room_2
+23:46:45.076 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=45, userId=1357, roomId=room_45
+23:46:45.078 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=999999, userId=16658, roomId=room_999999
+23:46:45.080 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1000000, roomId=room_2
+23:46:45.081 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=46088, userId=25, roomId=room_46088
+23:46:45.084 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2320, userId=15210, roomId=room_2320
+23:46:45.087 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=999999, roomId=room_2
+23:46:45.089 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1934, userId=99, roomId=room_1934
+23:46:45.091 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=26, userId=16, roomId=room_26
+23:46:45.092 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=28, roomId=room_1000000
+23:46:45.094 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=1, roomId=room_1000000
+23:46:45.096 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=40678, userId=44418, roomId=room_40678
+23:46:45.097 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=16, userId=618837, roomId=room_16
+23:46:45.100 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=11, userId=22, roomId=room_11
+23:46:45.101 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=57, userId=273, roomId=room_57
+23:46:45.103 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=409, userId=86, roomId=room_409
+23:46:45.106 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=48, userId=42827, roomId=room_48
+23:46:45.109 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=3964, userId=825, roomId=room_3964
+23:46:45.110 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=10729, userId=8459, roomId=room_10729
+23:46:45.112 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=999999, roomId=room_2
+23:46:45.114 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2261, userId=587752, roomId=room_2261
+23:46:45.117 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=101598, roomId=room_1
+23:46:45.119 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=2, roomId=room_1
+23:46:45.120 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=37, userId=4, roomId=room_37
+23:46:45.123 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=104, roomId=room_1000000
+23:46:45.125 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=6040, userId=999999, roomId=room_6040
+23:46:45.127 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=2, roomId=room_1
+23:46:45.128 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=449, userId=43, roomId=room_449
+23:46:45.130 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2481, userId=60, roomId=room_2481
+23:46:45.132 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=682996, userId=8386, roomId=room_682996
+23:46:45.134 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=38691, userId=214273, roomId=room_38691
+23:46:45.135 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=94344, userId=62, roomId=room_94344
+23:46:45.137 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=13858, userId=5180, roomId=room_13858
+23:46:45.139 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=484036, userId=7, roomId=room_484036
+23:46:45.141 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=17, userId=8, roomId=room_17
+23:46:45.142 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=70651, userId=336, roomId=room_70651
+23:46:45.144 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=2, roomId=room_7
+23:46:45.147 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=342321, userId=1704, roomId=room_342321
+23:46:45.149 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=117, userId=40, roomId=room_117
+23:46:45.152 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=10367, roomId=room_2
+23:46:45.153 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=5874, userId=14782, roomId=room_5874
+23:46:45.154 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1, roomId=room_1
+23:46:45.157 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1, roomId=room_1
+23:46:45.159 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=238, userId=10366, roomId=room_238
+23:46:45.161 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=4195, roomId=room_1000000
+23:46:45.162 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=20345, userId=20, roomId=room_20345
+23:46:45.164 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1099, userId=987638, roomId=room_1099
+23:46:45.166 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=29, userId=75774, roomId=room_29
+23:46:45.168 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=24, userId=1572, roomId=room_24
+23:46:45.170 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1, roomId=room_1
+23:46:45.171 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=65818, userId=12727, roomId=room_65818
+23:46:45.173 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=277, userId=18272, roomId=room_277
+23:46:45.174 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1000000, roomId=room_1
+23:46:45.177 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=11, userId=599775, roomId=room_11
+23:46:45.178 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7205, userId=23881, roomId=room_7205
+23:46:45.180 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=45807, userId=82378, roomId=room_45807
+23:46:45.182 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=270101, userId=592, roomId=room_270101
+23:46:45.183 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=107126, userId=199, roomId=room_107126
+23:46:45.194 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1000000, roomId=room_1
+23:46:45.196 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=684805, userId=162, roomId=room_684805
+23:46:45.197 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=999999, roomId=room_1
+23:46:45.199 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=9, userId=13532, roomId=room_9
+23:46:45.200 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1459, userId=46498, roomId=room_1459
+23:46:45.201 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=25691, userId=3122, roomId=room_25691
+timestamp = 2025-12-31T23:46:45.203721100, RTCTokenPropertyTest:tokenShouldBeBoundToConsultationAndUser = 
+                              |-----------------------jqwik-----------------------
+tries = 100                   | # of calls to property
+checks = 100                  | # of not rejected calls
+generation = RANDOMIZED       | parameters are randomly generated
+after-failure = SAMPLE_FIRST  | try previously failed sample, then previous seed
+when-fixed-seed = ALLOW       | fixing the random seed is allowed
+edge-cases#mode = MIXIN       | edge cases are mixed in
+edge-cases#total = 32         | # of all combined edge cases
+edge-cases#tried = 15         | # of edge cases tried in current run
+seed = -3927060220834772467   | random seed to reproduce generated values
+
+
+]]></system-out>
+  </testcase>
+  <testcase name="tamperedTokenShouldFailValidation" classname="com.erkang.integration.rtc.RTCTokenPropertyTest" time="0.116">
+    <system-out><![CDATA[23:46:45.209 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=2, roomId=room_2
+23:46:45.227 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.229 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=141, userId=125621, roomId=room_141
+23:46:45.231 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.232 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=141, userId=851, roomId=room_141
+23:46:45.237 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.237 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=879, userId=5, roomId=room_879
+23:46:45.239 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.239 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=2, roomId=room_2
+23:46:45.240 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.240 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=3, userId=56707, roomId=room_3
+23:46:45.241 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.241 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=128, userId=520, roomId=room_128
+23:46:45.241 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.242 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=37479, userId=590832, roomId=room_37479
+23:46:45.242 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.242 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=18975, userId=134523, roomId=room_18975
+23:46:45.242 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.244 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=85481, userId=154, roomId=room_85481
+23:46:45.244 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.245 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=6719, userId=26945, roomId=room_6719
+23:46:45.245 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.246 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=8, userId=46, roomId=room_8
+23:46:45.246 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.247 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1, roomId=room_2
+23:46:45.247 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.248 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=42, userId=32976, roomId=room_42
+23:46:45.248 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.249 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=13932, userId=29928, roomId=room_13932
+23:46:45.249 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.251 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=55067, roomId=room_2
+23:46:45.251 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.253 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=502, userId=33649, roomId=room_502
+23:46:45.253 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.254 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=119975, userId=6316, roomId=room_119975
+23:46:45.254 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.255 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=144463, userId=12928, roomId=room_144463
+23:46:45.255 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.255 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1, roomId=room_2
+23:46:45.256 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.257 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1000000, roomId=room_2
+23:46:45.257 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.258 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=26, userId=120, roomId=room_26
+23:46:45.258 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.258 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=1000000, roomId=room_2
+23:46:45.259 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.259 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=14700, userId=42, roomId=room_14700
+23:46:45.260 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.260 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=8, userId=1, roomId=room_8
+23:46:45.261 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.261 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=3886, userId=1, roomId=room_3886
+23:46:45.261 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.262 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=999999, roomId=room_2
+23:46:45.262 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.263 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2, userId=999999, roomId=room_2
+23:46:45.263 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.263 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=75268, userId=49, roomId=room_75268
+23:46:45.264 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.264 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=422, userId=459881, roomId=room_422
+23:46:45.265 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.265 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=2, roomId=room_1
+23:46:45.266 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.267 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=565, userId=871388, roomId=room_565
+23:46:45.267 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.268 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=9073, userId=5, roomId=room_9073
+23:46:45.268 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.268 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=9, userId=15, roomId=room_9
+23:46:45.269 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.269 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=186, userId=1, roomId=room_186
+23:46:45.270 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.270 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=56320, userId=20, roomId=room_56320
+23:46:45.270 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.271 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=236, userId=20, roomId=room_236
+23:46:45.271 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.271 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=2, roomId=room_1
+23:46:45.272 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.273 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=376, userId=15, roomId=room_376
+23:46:45.274 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.274 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=40, userId=923468, roomId=room_40
+23:46:45.274 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.275 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=4, userId=124228, roomId=room_4
+23:46:45.275 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.276 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=54, userId=43, roomId=room_54
+23:46:45.276 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.276 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1, roomId=room_1
+23:46:45.277 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.277 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=17, userId=688642, roomId=room_17
+23:46:45.278 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.278 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=999999, userId=46943, roomId=room_999999
+23:46:45.279 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.279 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=24, userId=5507, roomId=room_24
+23:46:45.280 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.280 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1, roomId=room_1
+23:46:45.280 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.281 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=23, userId=20, roomId=room_23
+23:46:45.281 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.281 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=647, userId=30729, roomId=room_647
+23:46:45.282 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.282 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1806, userId=34583, roomId=room_1806
+23:46:45.282 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.283 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=6105, userId=683, roomId=room_6105
+23:46:45.283 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.284 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=7098, roomId=room_7
+23:46:45.284 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.284 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=100, userId=33699, roomId=room_100
+23:46:45.285 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.286 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=20, userId=515, roomId=room_20
+23:46:45.286 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.286 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=49565, userId=79526, roomId=room_49565
+23:46:45.286 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.287 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=42, userId=95, roomId=room_42
+23:46:45.287 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.288 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=116028, userId=8, roomId=room_116028
+23:46:45.288 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.288 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=26663, userId=112209, roomId=room_26663
+23:46:45.288 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.289 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=7, userId=148, roomId=room_7
+23:46:45.289 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.289 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1000000, roomId=room_1
+23:46:45.290 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.290 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2910, userId=20, roomId=room_2910
+23:46:45.291 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.291 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=28001, userId=148375, roomId=room_28001
+23:46:45.291 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.292 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=14290, userId=4722, roomId=room_14290
+23:46:45.292 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.292 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=104, userId=426241, roomId=room_104
+23:46:45.292 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.293 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=140901, userId=999999, roomId=room_140901
+23:46:45.293 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.293 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1000000, roomId=room_1
+23:46:45.294 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.294 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=14901, userId=507, roomId=room_14901
+23:46:45.294 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.295 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=667, userId=5978, roomId=room_667
+23:46:45.295 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.296 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=14100, userId=16569, roomId=room_14100
+23:46:45.296 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.296 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=17812, userId=2009, roomId=room_17812
+23:46:45.297 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.297 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=999999, userId=1829, roomId=room_999999
+23:46:45.297 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.297 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=3986, userId=3203, roomId=room_3986
+23:46:45.299 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.299 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=776876, roomId=room_1
+23:46:45.299 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.300 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=999999, roomId=room_1
+23:46:45.300 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.301 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=3763, userId=2, roomId=room_3763
+23:46:45.301 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.301 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=880, userId=4931, roomId=room_880
+23:46:45.302 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.302 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=34, userId=136471, roomId=room_34
+23:46:45.303 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.304 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=999999, roomId=room_1
+23:46:45.304 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.305 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=22805, userId=5755, roomId=room_22805
+23:46:45.305 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.305 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1341, userId=9595, roomId=room_1341
+23:46:45.306 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.306 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=35457, userId=3, roomId=room_35457
+23:46:45.306 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.306 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=48263, userId=447431, roomId=room_48263
+23:46:45.306 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.306 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=14211, userId=8185, roomId=room_14211
+23:46:45.306 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.307 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=170921, userId=673, roomId=room_170921
+23:46:45.307 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.308 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=6, userId=13569, roomId=room_6
+23:46:45.308 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.308 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1, userId=1442, roomId=room_1
+23:46:45.309 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.309 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=12, userId=649, roomId=room_12
+23:46:45.310 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.310 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=2150, userId=48581, roomId=room_2150
+23:46:45.310 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.311 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=10, userId=1811, roomId=room_10
+23:46:45.311 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.312 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=2, roomId=room_1000000
+23:46:45.312 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.312 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=3643, userId=18597, roomId=room_3643
+23:46:45.313 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.313 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1298, userId=222, roomId=room_1298
+23:46:45.314 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.314 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1614, userId=51, roomId=room_1614
+23:46:45.314 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.315 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1000000, userId=2, roomId=room_1000000
+23:46:45.315 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.316 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=1609, userId=4066, roomId=room_1609
+23:46:45.316 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: Invalid Base64Url payload: <redacted>
+23:46:45.316 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=528379, userId=102918, roomId=room_528379
+23:46:45.317 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.317 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=154, userId=170, roomId=room_154
+23:46:45.317 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.317 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=136231, userId=3, roomId=room_136231
+23:46:45.319 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.319 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=348, userId=19, roomId=room_348
+23:46:45.319 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+23:46:45.319 [main] INFO com.erkang.integration.rtc.RTCTokenService -- 生成RTC Token: consultationId=4, userId=346187, roomId=room_4
+23:46:45.320 [main] WARN com.erkang.integration.rtc.RTCTokenService -- RTC Token验证失败: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+timestamp = 2025-12-31T23:46:45.320885500, RTCTokenPropertyTest:tamperedTokenShouldFailValidation = 
+                              |-----------------------jqwik-----------------------
+tries = 100                   | # of calls to property
+checks = 100                  | # of not rejected calls
+generation = RANDOMIZED       | parameters are randomly generated
+after-failure = SAMPLE_FIRST  | try previously failed sample, then previous seed
+when-fixed-seed = ALLOW       | fixing the random seed is allowed
+edge-cases#mode = MIXIN       | edge cases are mixed in
+edge-cases#total = 32         | # of all combined edge cases
+edge-cases#tried = 18         | # of edge cases tried in current run
+seed = 8808493351659822590    | random seed to reproduce generated values
+
+
+]]></system-out>
+  </testcase>
+</testsuite>
