@@ -15,6 +15,7 @@ com\erkang\integration\storage\MinioConfig.class
 com\erkang\domain\entity\AIChatMessage.class
 com\erkang\mapper\AppointmentMapper.class
 com\erkang\domain\entity\Consultation.class
+com\erkang\domain\vo\UserInfoVO.class
 com\erkang\controller\DoctorController.class
 com\erkang\controller\PrescriptionController.class
 com\erkang\controller\MedicalRecordController.class
@@ -37,6 +38,7 @@ com\erkang\domain\entity\AIChatSession.class
 com\erkang\service\MedicalRecordService.class
 com\erkang\websocket\WSMessage$WSMessageBuilder.class
 com\erkang\integration\storage\MinioService.class
+com\erkang\mapper\PermissionMapper.class
 com\erkang\domain\vo\TimeSlotVO.class
 com\erkang\domain\entity\PrescriptionItem.class
 com\erkang\domain\enums\ConsultationStatus.class
@@ -47,6 +49,7 @@ com\erkang\controller\PharmacyReviewController.class
 com\erkang\domain\entity\AuditLog$AuditLogBuilder.class
 com\erkang\domain\entity\FollowupRecord.class
 com\erkang\controller\package-info.class
+com\erkang\domain\dto\AuditLogExportDTO.class
 com\erkang\security\DataScopeAspect.class
 com\erkang\mapper\FollowupRecordMapper.class
 com\erkang\service\AuthService.class
@@ -67,6 +70,7 @@ com\erkang\domain\entity\MedicalRecord.class
 com\erkang\common\GlobalExceptionHandler.class
 com\erkang\domain\vo\package-info.class
 com\erkang\config\WebMvcConfig.class
+com\erkang\domain\vo\UserInfoVO$UserInfoVOBuilder.class
 com\erkang\integration\rtc\RTCToken$RTCTokenBuilder.class
 com\erkang\websocket\ErkangWebSocketHandler.class
 com\erkang\websocket\WebSocketAuthInterceptor.class

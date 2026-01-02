@@ -23,12 +23,14 @@ D:\GraduationProject\backend\src\main\java\com\erkang\config\RedisConfig.java
 D:\GraduationProject\backend\src\main\java\com\erkang\security\Auditable.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\FollowupRecord.java
 D:\GraduationProject\backend\src\main\java\com\erkang\mapper\FollowupRecordMapper.java
+D:\GraduationProject\backend\src\main\java\com\erkang\mapper\PermissionMapper.java
 D:\GraduationProject\backend\src\main\java\com\erkang\mapper\AuditLogMapper.java
 D:\GraduationProject\backend\src\main\java\com\erkang\websocket\MessageDispatcher.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\vo\PatientProfileVO.java
 D:\GraduationProject\backend\src\main\java\com\erkang\integration\storage\MinioConfig.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\Role.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\package-info.java
+D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\AuditLogExportDTO.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\LoginRequest.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\Prescription.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\Referral.java
@@ -50,6 +52,7 @@ D:\GraduationProject\backend\src\main\java\com\erkang\mapper\ReferralMapper.java
 D:\GraduationProject\backend\src\main\java\com\erkang\websocket\WSMessageType.java
 D:\GraduationProject\backend\src\main\java\com\erkang\controller\RTCController.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\AuditLog.java
+D:\GraduationProject\backend\src\main\java\com\erkang\domain\vo\UserInfoVO.java
 D:\GraduationProject\backend\src\main\java\com\erkang\common\GlobalExceptionHandler.java
 D:\GraduationProject\backend\src\main\java\com\erkang\common\package-info.java
 D:\GraduationProject\backend\src\main\java\com\erkang\controller\ReferralController.java

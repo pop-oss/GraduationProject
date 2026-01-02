@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.erkang.integration.storage.FileStoragePropertyTest
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.019 s -- in com.erkang.integration.storage.FileStoragePropertyTest

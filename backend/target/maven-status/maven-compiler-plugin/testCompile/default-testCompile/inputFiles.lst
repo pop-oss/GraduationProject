@@ -4,6 +4,7 @@ D:\GraduationProject\backend\src\test\java\com\erkang\integration\storage\FileSt
 D:\GraduationProject\backend\src\test\java\com\erkang\controller\MedicalRecordControllerTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\controller\AuthControllerTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\service\StatsPropertyTest.java
+D:\GraduationProject\backend\src\test\java\com\erkang\controller\AdminControllerTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\service\AIPropertyTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\service\AuditLogPropertyTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\service\ReferralPropertyTest.java
@@ -12,6 +13,7 @@ D:\GraduationProject\backend\src\test\java\com\erkang\common\DesensitizeProperty
 D:\GraduationProject\backend\src\test\java\com\erkang\controller\MDTControllerTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\security\DataScopePropertyTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\util\PasswordGenerator.java
+D:\GraduationProject\backend\src\test\java\com\erkang\controller\AdminRolePermissionPropertyTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\integration\rtc\RTCTokenPropertyTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\controller\ApiIntegrationTest.java
 D:\GraduationProject\backend\src\test\java\com\erkang\controller\FileControllerTest.java

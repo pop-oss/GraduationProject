@@ -1,6 +1,7 @@
 package com.erkang.common;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -24,8 +25,23 @@ public class GlobalExceptionHandler {
      * 业务异常
      */
     @ExceptionHandler(BusinessException.class)
-    public Result<?> handleBusinessException(BusinessException e, HttpServletRequest request) {
-        log.warn("业务异常: {} - {}", request.getRequestURI(), e.getMessage());
+    public Result<?> handleBusinessException(BusinessException e, HttpServletRequest request, HttpServletResponse response) {
+        log.warn("业务异常: {} - {} (code: {})", request.getRequestURI(), e.getMessage(), e.getCode());
+        
+        // 根据错误码设置 HTTP 状态码
+        int code = e.getCode();
+        if (code == ErrorCode.UNAUTHORIZED.getCode() || code == ErrorCode.AUTH_TOKEN_EXPIRED.getCode() 
+                || code == ErrorCode.AUTH_TOKEN_INVALID.getCode()) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        } else if (code == ErrorCode.FORBIDDEN.getCode() || code == ErrorCode.AUTH_ROLE_NOT_ALLOWED.getCode()
+                || code == ErrorCode.AUTH_DATA_SCOPE_DENIED.getCode()) {
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+        } else if (code == ErrorCode.NOT_FOUND.getCode() || (code >= 2001 && code <= 8999 && e.getMessage().contains("不存在"))) {
+            response.setStatus(HttpStatus.NOT_FOUND.value());
+        } else if (code == ErrorCode.PARAM_ERROR.getCode()) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        
         return Result.fail(e.getCode(), e.getMessage());
     }
     

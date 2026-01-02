@@ -153,4 +153,64 @@ public class AuthService {
     public String encodePassword(String rawPassword) {
         return passwordEncoder.encode(rawPassword);
     }
+
+    /**
+     * 获取用户信息
+     */
+    public com.erkang.domain.vo.UserInfoVO getUserInfo(Long userId) {
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.AUTH_USER_NOT_FOUND);
+        }
+        List<String> roles = userMapper.selectRoleCodesByUserId(userId);
+        return com.erkang.domain.vo.UserInfoVO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .realName(user.getRealName())
+                .phone(user.getPhone())
+                .email(user.getEmail())
+                .avatar(user.getAvatar())
+                .roles(roles)
+                .createdAt(user.getCreatedAt())
+                .build();
+    }
+
+    /**
+     * 更新个人信息
+     */
+    public void updateProfile(Long userId, String realName, String phone, String email) {
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.AUTH_USER_NOT_FOUND);
+        }
+        if (realName != null && !realName.isEmpty()) {
+            user.setRealName(realName);
+        }
+        if (phone != null) {
+            user.setPhone(phone);
+        }
+        if (email != null) {
+            user.setEmail(email);
+        }
+        userMapper.updateById(user);
+        log.info("用户更新个人信息: userId={}", userId);
+    }
+
+    /**
+     * 修改密码
+     */
+    public void changePassword(Long userId, String oldPassword, String newPassword) {
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.AUTH_USER_NOT_FOUND);
+        }
+        // 验证旧密码
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new BusinessException(ErrorCode.AUTH_INVALID_CREDENTIALS, "原密码错误");
+        }
+        // 设置新密码
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userMapper.updateById(user);
+        log.info("用户修改密码成功: userId={}", userId);
+    }
 }

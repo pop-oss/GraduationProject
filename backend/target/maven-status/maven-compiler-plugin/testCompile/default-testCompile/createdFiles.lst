@@ -6,6 +6,7 @@ com\erkang\domain\ConsultationStatusPropertyTest.class
 com\erkang\integration\rtc\RTCTokenPropertyTest.class
 com\erkang\integration\storage\FileStoragePropertyTest.class
 com\erkang\service\MedicalRecordPropertyTest.class
+com\erkang\controller\AdminControllerTest.class
 com\erkang\security\JwtTokenProviderPropertyTest.class
 com\erkang\controller\DoctorControllerTest.class
 com\erkang\service\StatsPropertyTest$PrescriptionCounts.class
@@ -25,6 +26,7 @@ com\erkang\util\PasswordGenerator.class
 com\erkang\controller\AuthControllerTest.class
 com\erkang\controller\ApiIntegrationTest.class
 com\erkang\controller\MDTControllerTest.class
+com\erkang\controller\AdminRolePermissionPropertyTest.class
 com\erkang\controller\PatientControllerTest.class
 com\erkang\controller\StatsControllerTest.class
 com\erkang\common\DesensitizePropertyTest.class

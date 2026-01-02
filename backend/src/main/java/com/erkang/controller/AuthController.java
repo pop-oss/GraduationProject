@@ -3,13 +3,17 @@ package com.erkang.controller;
 import com.erkang.common.Result;
 import com.erkang.domain.dto.LoginRequest;
 import com.erkang.domain.vo.LoginVO;
+import com.erkang.domain.vo.UserInfoVO;
 import com.erkang.service.AuthService;
+import com.erkang.security.UserContext;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * 认证控制器
@@ -46,6 +50,35 @@ public class AuthController {
     public Result<LoginVO> refreshToken(@RequestParam String refreshToken) {
         LoginVO loginVO = authService.refreshToken(refreshToken);
         return Result.success(loginVO);
+    }
+
+    @Operation(summary = "获取当前用户信息")
+    @GetMapping("/me")
+    public Result<UserInfoVO> getCurrentUser() {
+        Long userId = UserContext.getUserId();
+        UserInfoVO userInfo = authService.getUserInfo(userId);
+        return Result.success(userInfo);
+    }
+
+    @Operation(summary = "更新个人信息")
+    @PostMapping("/profile")
+    public Result<Void> updateProfile(@RequestBody Map<String, String> params) {
+        Long userId = UserContext.getUserId();
+        String realName = params.get("realName");
+        String phone = params.get("phone");
+        String email = params.get("email");
+        authService.updateProfile(userId, realName, phone, email);
+        return Result.success();
+    }
+
+    @Operation(summary = "修改密码")
+    @PostMapping("/change-password")
+    public Result<Void> changePassword(@RequestBody Map<String, String> params) {
+        Long userId = UserContext.getUserId();
+        String oldPassword = params.get("oldPassword");
+        String newPassword = params.get("newPassword");
+        authService.changePassword(userId, oldPassword, newPassword);
+        return Result.success();
     }
     
     /**

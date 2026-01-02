@@ -7,22 +7,29 @@ import com.erkang.common.ErrorCode;
 import com.erkang.common.Result;
 import com.erkang.domain.entity.User;
 import com.erkang.mapper.ConsultationMapper;
+import com.erkang.mapper.PermissionMapper;
 import com.erkang.mapper.PrescriptionMapper;
+import com.erkang.mapper.RoleMapper;
 import com.erkang.mapper.UserMapper;
 import com.erkang.security.RequireRole;
+import com.erkang.service.AuditService;
 import com.erkang.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 管理员控制器
@@ -39,6 +46,9 @@ public class AdminController {
     private final ConsultationMapper consultationMapper;
     private final PrescriptionMapper prescriptionMapper;
     private final AuthService authService;
+    private final RoleMapper roleMapper;
+    private final PermissionMapper permissionMapper;
+    private final AuditService auditService;
 
     /**
      * 获取用户列表
@@ -293,23 +303,26 @@ public class AdminController {
     @PostMapping("/users/{id}/reset-password")
     @RequireRole({"ADMIN"})
     @Operation(summary = "重置用户密码")
-    public Result<Map<String, String>> resetPassword(@PathVariable Long id) {
+    public Result<Void> resetPassword(@PathVariable Long id, @RequestBody Map<String, Object> request) {
         User user = userMapper.selectById(id);
         if (user == null || user.getDeletedAt() != null) {
             throw new BusinessException(ErrorCode.AUTH_USER_NOT_FOUND);
         }
         
-        // 生成临时密码
-        String tempPassword = "Temp" + System.currentTimeMillis() % 100000;
-        user.setPassword(authService.encodePassword(tempPassword));
+        String newPassword = (String) request.get("password");
+        if (newPassword == null || newPassword.trim().isEmpty()) {
+            throw new BusinessException(ErrorCode.PARAM_ERROR, "密码不能为空");
+        }
+        if (newPassword.length() < 6) {
+            throw new BusinessException(ErrorCode.PARAM_ERROR, "密码至少6位");
+        }
+        
+        user.setPassword(authService.encodePassword(newPassword));
         user.setUpdatedAt(LocalDateTime.now());
         userMapper.updateById(user);
         
         log.info("重置用户密码: userId={}", id);
-        
-        Map<String, String> data = new HashMap<>();
-        data.put("tempPassword", tempPassword);
-        return Result.success(data);
+        return Result.success();
     }
 
     /**
@@ -392,5 +405,132 @@ public class AdminController {
         stats.put("onlineDoctors", 0); // 简化处理
         
         return Result.success(stats);
+    }
+
+    /**
+     * 获取角色列表
+     */
+    @GetMapping("/roles")
+    @RequireRole({"ADMIN"})
+    @Operation(summary = "获取角色列表")
+    public Result<List<Map<String, Object>>> getRoles() {
+        List<Map<String, Object>> roles = roleMapper.selectAllRoles();
+        return Result.success(roles);
+    }
+
+    /**
+     * 获取角色详情（含权限ID列表）
+     */
+    @GetMapping("/roles/{id}")
+    @RequireRole({"ADMIN"})
+    @Operation(summary = "获取角色详情")
+    public Result<Map<String, Object>> getRoleDetail(@PathVariable Long id) {
+        Map<String, Object> role = roleMapper.selectRoleById(id);
+        if (role == null) {
+            throw new BusinessException(ErrorCode.PARAM_ERROR, "角色不存在");
+        }
+        // 获取角色的权限ID列表
+        List<Long> permissionIds = roleMapper.selectPermissionIdsByRoleId(id);
+        role.put("permissionIds", permissionIds);
+        return Result.success(role);
+    }
+
+    /**
+     * 更新角色权限
+     * _Requirements: 4.1, 4.2, 4.3, 4.4, 5.3_
+     */
+    @PutMapping("/roles/{id}/permissions")
+    @RequireRole({"ADMIN"})
+    @Transactional(rollbackFor = Exception.class)
+    @Operation(summary = "更新角色权限")
+    public Result<Void> updateRolePermissions(@PathVariable Long id, @RequestBody Map<String, Object> request) {
+        // 验证角色是否存在
+        Map<String, Object> role = roleMapper.selectRoleById(id);
+        if (role == null) {
+            throw new BusinessException(ErrorCode.PARAM_ERROR, "角色不存在");
+        }
+        
+        @SuppressWarnings("unchecked")
+        List<Integer> permissionIds = (List<Integer>) request.get("permissionIds");
+        
+        // 获取原有权限用于审计日志
+        List<Long> oldPermissionIds = roleMapper.selectPermissionIdsByRoleId(id);
+        
+        // 验证权限ID有效性 _Requirements: 5.3_
+        if (permissionIds != null && !permissionIds.isEmpty()) {
+            List<Long> permIdLongs = permissionIds.stream()
+                    .map(Integer::longValue)
+                    .collect(Collectors.toList());
+            
+            List<Long> validPermissionIds = permissionMapper.selectPermissionIdsByIds(permIdLongs);
+            Set<Long> validSet = new HashSet<>(validPermissionIds);
+            
+            // 检查是否有无效的权限ID
+            List<Long> invalidIds = permIdLongs.stream()
+                    .filter(pid -> !validSet.contains(pid))
+                    .collect(Collectors.toList());
+            
+            if (!invalidIds.isEmpty()) {
+                throw new BusinessException(ErrorCode.PARAM_ERROR, 
+                        "无效的权限ID: " + invalidIds);
+            }
+        }
+        
+        // 删除原有权限 _Requirements: 4.1_
+        roleMapper.deleteRolePermissions(id);
+        
+        // 添加新权限 _Requirements: 4.2_
+        if (permissionIds != null && !permissionIds.isEmpty()) {
+            for (Integer permId : permissionIds) {
+                roleMapper.insertRolePermission(id, permId.longValue());
+            }
+        }
+        
+        // 记录审计日志 _Requirements: 4.4_
+        String roleCode = (String) role.get("roleCode");
+        String detail = String.format("角色[%s]权限更新: 原权限数=%d, 新权限数=%d", 
+                roleCode, 
+                oldPermissionIds.size(), 
+                permissionIds != null ? permissionIds.size() : 0);
+        auditService.log("UPDATE_ROLE_PERMISSION", "权限管理", "ROLE", id, detail);
+        
+        log.info("更新角色权限: roleId={}, roleCode={}, permissionCount={}", 
+                id, roleCode, permissionIds != null ? permissionIds.size() : 0);
+        return Result.success();
+    }
+
+    /**
+     * 获取权限树
+     */
+    @GetMapping("/permissions/tree")
+    @RequireRole({"ADMIN"})
+    @Operation(summary = "获取权限树")
+    public Result<List<Map<String, Object>>> getPermissionTree() {
+        List<Map<String, Object>> allPermissions = permissionMapper.selectAllPermissions();
+        // 构建树形结构
+        List<Map<String, Object>> tree = buildPermissionTree(allPermissions, 0L);
+        return Result.success(tree);
+    }
+
+    /**
+     * 构建权限树
+     */
+    private List<Map<String, Object>> buildPermissionTree(List<Map<String, Object>> allPermissions, Long parentId) {
+        return allPermissions.stream()
+            .filter(p -> {
+                Object pid = p.get("parentId");
+                if (pid == null) return parentId == 0L;
+                return pid.equals(parentId) || pid.equals(parentId.intValue());
+            })
+            .map(p -> {
+                Map<String, Object> node = new HashMap<>(p);
+                Long id = ((Number) p.get("id")).longValue();
+                List<Map<String, Object>> children = buildPermissionTree(allPermissions, id);
+                if (!children.isEmpty()) {
+                    node.put("children", children);
+                }
+                return node;
+            })
+            .toList();
     }
 }
