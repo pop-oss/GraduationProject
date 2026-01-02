@@ -4,6 +4,8 @@ import com.erkang.common.BusinessException;
 import com.erkang.domain.entity.Prescription;
 import com.erkang.domain.entity.PrescriptionItem;
 import com.erkang.domain.enums.PrescriptionStatus;
+import com.erkang.mapper.ConsultationMapper;
+import com.erkang.mapper.PatientProfileMapper;
 import com.erkang.mapper.PrescriptionItemMapper;
 import com.erkang.mapper.PrescriptionMapper;
 import com.erkang.service.PrescriptionService;
@@ -126,7 +128,9 @@ class PrescriptionStatusPropertyTest {
         
         PrescriptionMapper prescriptionMapper = Mockito.mock(PrescriptionMapper.class);
         PrescriptionItemMapper itemMapper = Mockito.mock(PrescriptionItemMapper.class);
-        PrescriptionService service = new PrescriptionService(prescriptionMapper, itemMapper);
+        ConsultationMapper consultationMapper = Mockito.mock(ConsultationMapper.class);
+        PatientProfileMapper patientProfileMapper = Mockito.mock(PatientProfileMapper.class);
+        PrescriptionService service = new PrescriptionService(prescriptionMapper, itemMapper, consultationMapper, patientProfileMapper);
         
         Prescription prescription = new Prescription();
         prescription.setId(prescriptionId);
@@ -173,7 +177,9 @@ class PrescriptionStatusPropertyTest {
         
         PrescriptionMapper prescriptionMapper = Mockito.mock(PrescriptionMapper.class);
         PrescriptionItemMapper itemMapper = Mockito.mock(PrescriptionItemMapper.class);
-        PrescriptionService service = new PrescriptionService(prescriptionMapper, itemMapper);
+        ConsultationMapper consultationMapper = Mockito.mock(ConsultationMapper.class);
+        PatientProfileMapper patientProfileMapper = Mockito.mock(PatientProfileMapper.class);
+        PrescriptionService service = new PrescriptionService(prescriptionMapper, itemMapper, consultationMapper, patientProfileMapper);
         
         Prescription prescription = new Prescription();
         prescription.setId(prescriptionId);

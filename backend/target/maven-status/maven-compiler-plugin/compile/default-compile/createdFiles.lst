@@ -4,12 +4,14 @@ com\erkang\domain\entity\PatientProfile.class
 com\erkang\controller\AuthController.class
 com\erkang\domain\entity\AITask.class
 com\erkang\security\JwtAuthFilter.class
+com\erkang\controller\DrugController$DrugDTO.class
 com\erkang\controller\AIController.class
 com\erkang\service\DoctorService.class
 com\erkang\integration\package-info.class
 com\erkang\service\FollowupService.class
 com\erkang\domain\vo\DoctorVO.class
 com\erkang\domain\vo\TimeSlotVO$TimeSlotVOBuilder.class
+com\erkang\domain\dto\CreateReferralRequest.class
 com\erkang\domain\enums\PrescriptionStatus$1.class
 com\erkang\integration\storage\MinioConfig.class
 com\erkang\domain\entity\AIChatMessage.class
@@ -32,6 +34,8 @@ com\erkang\domain\entity\DoctorProfile.class
 com\erkang\service\ConsultationService.class
 com\erkang\websocket\WebSocketConfig.class
 com\erkang\domain\vo\PatientProfileVO.class
+com\erkang\domain\dto\CreateMedicalRecordRequest.class
+com\erkang\domain\dto\CreatePrescriptionRequest$PrescriptionItemDTO.class
 com\erkang\domain\enums\ConsultationStatus$1.class
 com\erkang\config\OpenApiConfig.class
 com\erkang\domain\entity\AIChatSession.class
@@ -56,6 +60,7 @@ com\erkang\service\AuthService.class
 com\erkang\controller\RTCController.class
 com\erkang\domain\entity\PharmacyReview.class
 com\erkang\controller\MDTController.class
+com\erkang\controller\DrugController.class
 com\erkang\domain\enums\package-info.class
 com\erkang\service\PharmacyReviewService.class
 com\erkang\domain\dto\PatientProfileDTO.class
@@ -67,8 +72,10 @@ com\erkang\websocket\package-info.class
 com\erkang\domain\entity\AuditLog.class
 com\erkang\domain\entity\Appointment.class
 com\erkang\domain\entity\MedicalRecord.class
+com\erkang\domain\dto\CreateMDTRequest.class
 com\erkang\common\GlobalExceptionHandler.class
 com\erkang\domain\vo\package-info.class
+com\erkang\domain\dto\ConsultationDetailDTO$PatientInfo.class
 com\erkang\config\WebMvcConfig.class
 com\erkang\domain\vo\UserInfoVO$UserInfoVOBuilder.class
 com\erkang\integration\rtc\RTCToken$RTCTokenBuilder.class
@@ -112,6 +119,7 @@ com\erkang\domain\entity\Referral.class
 com\erkang\domain\vo\LoginVO$LoginVOBuilder.class
 com\erkang\config\RedisConfig.class
 com\erkang\security\DataScopeAspect$1.class
+com\erkang\domain\dto\ConsultationListDTO.class
 com\erkang\mapper\package-info.class
 com\erkang\service\AuditService.class
 com\erkang\mapper\PatientProfileMapper.class
@@ -123,8 +131,10 @@ com\erkang\security\LoginUser$LoginUserBuilder.class
 com\erkang\domain\entity\MedicalAttachment.class
 com\erkang\domain\entity\package-info.class
 com\erkang\security\RBACInterceptor.class
+com\erkang\domain\dto\CreatePrescriptionRequest.class
 com\erkang\domain\vo\LoginVO.class
 com\erkang\service\package-info.class
+com\erkang\domain\dto\ConsultationDetailDTO.class
 com\erkang\websocket\WebSocketSessionManager.class
 com\erkang\domain\entity\Hospital.class
 com\erkang\websocket\MessageDispatcher.class
@@ -132,6 +142,7 @@ com\erkang\mapper\HospitalMapper.class
 com\erkang\domain\entity\Role.class
 com\erkang\domain\entity\Department.class
 com\erkang\domain\enums\PrescriptionStatus.class
+com\erkang\domain\dto\PrescriptionReviewDTO.class
 com\erkang\service\PatientService.class
 com\erkang\domain\dto\CreateConsultationRequest.class
 com\erkang\mapper\PrescriptionMapper.class

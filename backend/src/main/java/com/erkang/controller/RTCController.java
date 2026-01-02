@@ -33,10 +33,10 @@ public class RTCController {
      * 获取RTC Token
      * 校验用户角色与问诊归属关系
      */
-    @PostMapping("/token")
+    @GetMapping("/token/{consultationId}")
     @RequireRole({"PATIENT", "DOCTOR_PRIMARY", "DOCTOR_EXPERT"})
     @Auditable(action = "RTC_TOKEN_REQUEST", module = "consultation")
-    public Result<RTCToken> getToken(@RequestParam Long consultationId) {
+    public Result<RTCToken> getToken(@PathVariable Long consultationId) {
         Long userId = UserContext.getUserId();
         LoginUser loginUser = UserContext.getUser();
         // 获取第一个角色作为主角色
@@ -72,10 +72,10 @@ public class RTCController {
     /**
      * 加入房间通知
      */
-    @PostMapping("/join")
+    @PostMapping("/join/{consultationId}")
     @RequireRole({"PATIENT", "DOCTOR_PRIMARY", "DOCTOR_EXPERT"})
     @Auditable(action = "RTC_JOIN", module = "consultation")
-    public Result<Void> joinRoom(@RequestParam Long consultationId) {
+    public Result<Void> joinRoom(@PathVariable Long consultationId) {
         Long userId = UserContext.getUserId();
         log.info("用户加入RTC房间: userId={}, consultationId={}", userId, consultationId);
         return Result.success(null);
@@ -84,10 +84,10 @@ public class RTCController {
     /**
      * 离开房间通知
      */
-    @PostMapping("/leave")
+    @PostMapping("/leave/{consultationId}")
     @RequireRole({"PATIENT", "DOCTOR_PRIMARY", "DOCTOR_EXPERT"})
     @Auditable(action = "RTC_LEAVE", module = "consultation")
-    public Result<Void> leaveRoom(@RequestParam Long consultationId) {
+    public Result<Void> leaveRoom(@PathVariable Long consultationId) {
         Long userId = UserContext.getUserId();
         log.info("用户离开RTC房间: userId={}, consultationId={}", userId, consultationId);
         return Result.success(null);

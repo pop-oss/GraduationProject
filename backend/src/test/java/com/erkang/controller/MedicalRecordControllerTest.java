@@ -1,5 +1,6 @@
 package com.erkang.controller;
 
+import com.erkang.domain.dto.CreateMedicalRecordRequest;
 import com.erkang.domain.entity.MedicalAttachment;
 import com.erkang.domain.entity.MedicalRecord;
 import com.erkang.security.LoginUser;
@@ -58,10 +59,13 @@ class MedicalRecordControllerTest {
         mockRecord.setPatientId(patientId);
         mockRecord.setStatus("DRAFT");
         
-        when(recordService.createRecord(eq(consultationId), eq(patientId), anyLong()))
+        when(recordService.createOrUpdateRecord(any(CreateMedicalRecordRequest.class), anyLong()))
             .thenReturn(mockRecord);
         
-        var result = recordController.create(consultationId, patientId);
+        CreateMedicalRecordRequest request = new CreateMedicalRecordRequest();
+        request.setConsultationId(consultationId);
+        
+        var result = recordController.createOrUpdate(request);
         
         assertThat(result).isNotNull();
         assertThat(result.getData()).isNotNull();

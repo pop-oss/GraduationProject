@@ -3,6 +3,7 @@ D:\GraduationProject\backend\src\main\java\com\erkang\service\AIService.java
 D:\GraduationProject\backend\src\main\java\com\erkang\mapper\MedicalAttachmentMapper.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\vo\LoginVO.java
 D:\GraduationProject\backend\src\main\java\com\erkang\mapper\PrescriptionItemMapper.java
+D:\GraduationProject\backend\src\main\java\com\erkang\controller\DrugController.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\MDTMember.java
 D:\GraduationProject\backend\src\main\java\com\erkang\mapper\DoctorProfileMapper.java
 D:\GraduationProject\backend\src\main\java\com\erkang\security\DataScopeAspect.java
@@ -36,6 +37,7 @@ D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\Prescription
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\Referral.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\PharmacyReview.java
 D:\GraduationProject\backend\src\main\java\com\erkang\controller\DoctorController.java
+D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\ConsultationListDTO.java
 D:\GraduationProject\backend\src\main\java\com\erkang\mapper\package-info.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\MedicalRecord.java
 D:\GraduationProject\backend\src\main\java\com\erkang\service\AuthService.java
@@ -64,6 +66,7 @@ D:\GraduationProject\backend\src\main\java\com\erkang\integration\rtc\RTCTokenSe
 D:\GraduationProject\backend\src\main\java\com\erkang\security\DataScopeHelper.java
 D:\GraduationProject\backend\src\main\java\com\erkang\controller\StatsController.java
 D:\GraduationProject\backend\src\main\java\com\erkang\websocket\package-info.java
+D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\ConsultationDetailDTO.java
 D:\GraduationProject\backend\src\main\java\com\erkang\security\UserContext.java
 D:\GraduationProject\backend\src\main\java\com\erkang\common\Result.java
 D:\GraduationProject\backend\src\main\java\com\erkang\controller\AdminController.java
@@ -72,7 +75,9 @@ D:\GraduationProject\backend\src\main\java\com\erkang\websocket\WebSocketAuthInt
 D:\GraduationProject\backend\src\main\java\com\erkang\controller\FileController.java
 D:\GraduationProject\backend\src\main\java\com\erkang\config\OpenApiConfig.java
 D:\GraduationProject\backend\src\main\java\com\erkang\common\ErrorCode.java
+D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\CreateMedicalRecordRequest.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\package-info.java
+D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\PrescriptionReviewDTO.java
 D:\GraduationProject\backend\src\main\java\com\erkang\service\PatientService.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\vo\package-info.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\UserRole.java
@@ -82,6 +87,7 @@ D:\GraduationProject\backend\src\main\java\com\erkang\controller\FollowupControl
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\Department.java
 D:\GraduationProject\backend\src\main\java\com\erkang\security\RequireRole.java
 D:\GraduationProject\backend\src\main\java\com\erkang\security\LoginUser.java
+D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\CreateMDTRequest.java
 D:\GraduationProject\backend\src\main\java\com\erkang\security\package-info.java
 D:\GraduationProject\backend\src\main\java\com\erkang\config\MybatisPlusConfig.java
 D:\GraduationProject\backend\src\main\java\com\erkang\controller\PrescriptionController.java
@@ -100,9 +106,11 @@ D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\PatientProfileD
 D:\GraduationProject\backend\src\main\java\com\erkang\mapper\MDTCaseMapper.java
 D:\GraduationProject\backend\src\main\java\com\erkang\mapper\MedicalRecordMapper.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\User.java
+D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\CreateReferralRequest.java
 D:\GraduationProject\backend\src\main\java\com\erkang\websocket\WebSocketConfig.java
 D:\GraduationProject\backend\src\main\java\com\erkang\mapper\AIChatMessageMapper.java
 D:\GraduationProject\backend\src\main\java\com\erkang\domain\entity\MDTConclusion.java
+D:\GraduationProject\backend\src\main\java\com\erkang\domain\dto\CreatePrescriptionRequest.java
 D:\GraduationProject\backend\src\main\java\com\erkang\security\JwtAuthFilter.java
 D:\GraduationProject\backend\src\main\java\com\erkang\common\utils\DesensitizeUtil.java
 D:\GraduationProject\backend\src\main\java\com\erkang\controller\MedicalRecordController.java

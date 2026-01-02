@@ -2,11 +2,17 @@ package com.erkang.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.erkang.domain.entity.Consultation;
+import com.erkang.domain.entity.Department;
+import com.erkang.domain.entity.DoctorProfile;
 import com.erkang.domain.entity.PharmacyReview;
 import com.erkang.domain.entity.Prescription;
+import com.erkang.domain.entity.User;
 import com.erkang.mapper.ConsultationMapper;
+import com.erkang.mapper.DepartmentMapper;
+import com.erkang.mapper.DoctorProfileMapper;
 import com.erkang.mapper.PharmacyReviewMapper;
 import com.erkang.mapper.PrescriptionMapper;
+import com.erkang.mapper.UserMapper;
 import com.erkang.security.Auditable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +38,9 @@ public class StatsService {
     private final ConsultationMapper consultationMapper;
     private final PrescriptionMapper prescriptionMapper;
     private final PharmacyReviewMapper pharmacyReviewMapper;
+    private final DoctorProfileMapper doctorProfileMapper;
+    private final UserMapper userMapper;
+    private final DepartmentMapper departmentMapper;
 
     /**
      * 统计问诊量
@@ -302,11 +311,19 @@ public class StatsService {
                     .filter(c -> c.getConsultationType() != null)
                     .collect(Collectors.groupingBy(Consultation::getConsultationType));
             
+            // 问诊类型映射为科室名称
+            Map<String, String> typeToName = Map.of(
+                    "VIDEO", "视频问诊",
+                    "AUDIO", "语音问诊",
+                    "TEXT", "图文问诊",
+                    "FOLLOW_UP", "复诊随访"
+            );
+            
             int id = 1;
             for (Map.Entry<String, List<Consultation>> entry : grouped.entrySet()) {
                 Map<String, Object> deptStats = new HashMap<>();
                 deptStats.put("departmentId", id++);
-                deptStats.put("departmentName", entry.getKey());
+                deptStats.put("departmentName", typeToName.getOrDefault(entry.getKey(), entry.getKey()));
                 deptStats.put("consultationCount", entry.getValue().size());
                 deptStats.put("prescriptionCount", 0); // 简化处理
                 deptStats.put("avgRating", 4.5); // 模拟数据
@@ -350,11 +367,44 @@ public class StatsService {
                     .filter(c -> c.getDoctorId() != null)
                     .collect(Collectors.groupingBy(Consultation::getDoctorId));
             
+            // 获取医生信息
             for (Map.Entry<Long, List<Consultation>> entry : grouped.entrySet()) {
+                Long doctorId = entry.getKey();
+                String doctorName = "医生" + doctorId;
+                String departmentName = "耳鼻喉科";
+                
+                // 尝试获取真实医生名称和科室
+                try {
+                    // doctorId 可能是 user_id，先尝试通过 user_id 查询
+                    DoctorProfile profile = doctorProfileMapper.selectByUserId(doctorId);
+                    if (profile != null) {
+                        // 获取医生名称
+                        User user = userMapper.selectById(profile.getUserId());
+                        if (user != null && user.getRealName() != null) {
+                            doctorName = user.getRealName();
+                        }
+                        // 获取科室名称
+                        if (profile.getDepartmentId() != null) {
+                            Department dept = departmentMapper.selectById(profile.getDepartmentId());
+                            if (dept != null && dept.getName() != null) {
+                                departmentName = dept.getName();
+                            }
+                        }
+                    } else {
+                        // 尝试直接用 doctorId 作为 user_id 查询用户名
+                        User user = userMapper.selectById(doctorId);
+                        if (user != null && user.getRealName() != null) {
+                            doctorName = user.getRealName();
+                        }
+                    }
+                } catch (Exception e) {
+                    log.debug("获取医生信息失败: doctorId={}", doctorId);
+                }
+                
                 Map<String, Object> doctorStats = new HashMap<>();
                 doctorStats.put("doctorId", entry.getKey());
-                doctorStats.put("doctorName", "医生" + entry.getKey()); // 简化处理
-                doctorStats.put("departmentName", "耳鼻喉科");
+                doctorStats.put("doctorName", doctorName);
+                doctorStats.put("departmentName", departmentName);
                 doctorStats.put("consultationCount", entry.getValue().size());
                 doctorStats.put("avgRating", 4.5); // 模拟数据
                 ranking.add(doctorStats);

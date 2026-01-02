@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -216,5 +217,61 @@ public class ConsultationService {
      */
     public Consultation getById(Long consultationId) {
         return getAndCheckOwnership(consultationId);
+    }
+    
+    /**
+     * 获取问诊详情（包含患者信息）
+     */
+    public Map<String, Object> getDetailById(Long consultationId) {
+        // 先校验权限
+        getAndCheckOwnership(consultationId);
+        
+        Map<String, Object> detail = consultationMapper.selectDetailById(consultationId);
+        if (detail == null) {
+            throw new BusinessException(ErrorCode.CONSULT_NOT_FOUND);
+        }
+        
+        // 构建患者信息
+        Map<String, Object> patient = new java.util.HashMap<>();
+        patient.put("id", detail.get("patient_id"));
+        patient.put("name", detail.get("patient_name"));
+        patient.put("phone", detail.get("patient_phone"));
+        patient.put("gender", detail.get("patient_gender"));
+        
+        // 计算年龄
+        Object birthDate = detail.get("patient_birth_date");
+        if (birthDate != null) {
+            try {
+                java.time.LocalDate birth = null;
+                if (birthDate instanceof java.time.LocalDate) {
+                    birth = (java.time.LocalDate) birthDate;
+                } else if (birthDate instanceof java.sql.Date) {
+                    birth = ((java.sql.Date) birthDate).toLocalDate();
+                }
+                if (birth != null) {
+                    int age = java.time.Period.between(birth, java.time.LocalDate.now()).getYears();
+                    patient.put("age", age);
+                }
+            } catch (Exception e) {
+                log.warn("计算年龄失败", e);
+            }
+        }
+        
+        // 手机号脱敏
+        String phone = (String) detail.get("patient_phone");
+        if (phone != null && phone.length() >= 7) {
+            patient.put("phoneMasked", phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4));
+        }
+        
+        detail.put("patient", patient);
+        
+        // 移除原始字段
+        detail.remove("patient_user_id");
+        detail.remove("patient_name");
+        detail.remove("patient_phone");
+        detail.remove("patient_gender");
+        detail.remove("patient_birth_date");
+        
+        return detail;
     }
 }

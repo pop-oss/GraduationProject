@@ -131,7 +131,10 @@ INSERT INTO consultation (appointment_id, patient_id, doctor_id, consultation_no
 (NULL, (SELECT id FROM sys_user WHERE username='patient4'), (SELECT id FROM sys_user WHERE username='doctor1'), 'CON20251222001', 'PHONE', 'FINISHED', DATE_SUB(NOW(), INTERVAL 10 DAY), DATE_SUB(NOW(), INTERVAL 10 DAY) + INTERVAL 15 MINUTE, 15, DATE_SUB(NOW(), INTERVAL 10 DAY)),
 (NULL, (SELECT id FROM sys_user WHERE username='patient5'), (SELECT id FROM sys_user WHERE username='expert1'), 'CON20251228001', 'VIDEO', 'FINISHED', DATE_SUB(NOW(), INTERVAL 4 DAY), DATE_SUB(NOW(), INTERVAL 4 DAY) + INTERVAL 45 MINUTE, 45, DATE_SUB(NOW(), INTERVAL 4 DAY)),
 (NULL, (SELECT id FROM sys_user WHERE username='patient1'), (SELECT id FROM sys_user WHERE username='doctor1'), 'CON20251230001', 'VIDEO', 'CANCELED', NULL, NULL, NULL, DATE_SUB(NOW(), INTERVAL 2 DAY)),
-(3, (SELECT id FROM sys_user WHERE username='patient3'), (SELECT id FROM sys_user WHERE username='doctor3'), 'CON20260101003', 'VIDEO', 'WAITING', NULL, NULL, NULL, NOW());
+(3, (SELECT id FROM sys_user WHERE username='patient3'), (SELECT id FROM sys_user WHERE username='doctor3'), 'CON20260101003', 'VIDEO', 'WAITING', NULL, NULL, NULL, NOW()),
+-- 为陈医生(doctor1)添加待接诊数据
+(NULL, (SELECT id FROM sys_user WHERE username='patient2'), (SELECT id FROM sys_user WHERE username='doctor1'), 'CON20260102001', 'VIDEO', 'WAITING', NULL, NULL, NULL, NOW()),
+(NULL, (SELECT id FROM sys_user WHERE username='patient4'), (SELECT id FROM sys_user WHERE username='doctor1'), 'CON20260102002', 'VIDEO', 'WAITING', NULL, NULL, NULL, DATE_SUB(NOW(), INTERVAL 30 MINUTE));
 
 -- =============================================
 -- 7. 聊天消息数据

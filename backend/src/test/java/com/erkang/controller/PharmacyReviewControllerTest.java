@@ -4,6 +4,7 @@ import com.erkang.domain.entity.PharmacyReview;
 import com.erkang.security.LoginUser;
 import com.erkang.security.UserContext;
 import com.erkang.service.PharmacyReviewService;
+import com.erkang.service.PrescriptionService;
 import net.jqwik.api.*;
 import net.jqwik.api.constraints.*;
 import net.jqwik.api.lifecycle.BeforeProperty;
@@ -23,12 +24,14 @@ import static org.mockito.Mockito.*;
 class PharmacyReviewControllerTest {
 
     private PharmacyReviewService reviewService;
+    private PrescriptionService prescriptionService;
     private PharmacyReviewController reviewController;
 
     @BeforeProperty
     void setUp() {
         reviewService = mock(PharmacyReviewService.class);
-        reviewController = new PharmacyReviewController(reviewService);
+        prescriptionService = mock(PrescriptionService.class);
+        reviewController = new PharmacyReviewController(reviewService, prescriptionService);
         // 设置UserContext
         UserContext.setUser(LoginUser.builder()
             .userId(1L)
@@ -62,7 +65,13 @@ class PharmacyReviewControllerTest {
         when(reviewService.approve(eq(prescriptionId), anyLong(), eq(riskLevel), anyString(), anyString()))
             .thenReturn(approvedReview);
         
-        var result = reviewController.approve(prescriptionId, riskLevel, riskDescription, suggestion);
+        // 构建请求体 Map
+        java.util.Map<String, String> body = new java.util.HashMap<>();
+        body.put("riskLevel", riskLevel);
+        body.put("riskDescription", riskDescription);
+        body.put("comment", suggestion);
+        
+        var result = reviewController.approve(prescriptionId, body);
         
         assertThat(result).isNotNull();
         assertThat(result.getData()).isNotNull();
@@ -95,7 +104,12 @@ class PharmacyReviewControllerTest {
         when(reviewService.reject(eq(prescriptionId), anyLong(), eq(rejectReason), anyString()))
             .thenReturn(rejectedReview);
         
-        var result = reviewController.reject(prescriptionId, rejectReason, suggestion);
+        // 构建请求体 Map
+        java.util.Map<String, String> body = new java.util.HashMap<>();
+        body.put("reason", rejectReason);
+        body.put("suggestion", suggestion);
+        
+        var result = reviewController.reject(prescriptionId, body);
         
         assertThat(result).isNotNull();
         assertThat(result.getData()).isNotNull();

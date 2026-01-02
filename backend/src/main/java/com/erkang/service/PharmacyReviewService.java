@@ -50,8 +50,8 @@ public class PharmacyReviewService {
         review.setPharmacistId(pharmacistId);
         review.setResult("APPROVED");
         review.setRiskLevel(riskLevel);
-        review.setRiskDescription(riskDescription);
         review.setSuggestion(suggestion);
+        review.setReviewedAt(LocalDateTime.now());
         review.setCreatedAt(LocalDateTime.now());
         reviewMapper.insert(review);
         
@@ -85,6 +85,7 @@ public class PharmacyReviewService {
         review.setResult("REJECTED");
         review.setRejectReason(rejectReason);
         review.setSuggestion(suggestion);
+        review.setReviewedAt(LocalDateTime.now());
         review.setCreatedAt(LocalDateTime.now());
         reviewMapper.insert(review);
         
@@ -125,5 +126,40 @@ public class PharmacyReviewService {
                .orderByDesc(PharmacyReview::getCreatedAt)
                .last("LIMIT 1");
         return reviewMapper.selectOne(wrapper);
+    }
+
+    /**
+     * 分页查询药师审核记录
+     */
+    public com.baomidou.mybatisplus.extension.plugins.pagination.Page<PharmacyReview> listByPharmacistIdPage(
+            Long pharmacistId, int page, int size) {
+        com.baomidou.mybatisplus.extension.plugins.pagination.Page<PharmacyReview> pageParam = 
+            new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(page, size);
+        LambdaQueryWrapper<PharmacyReview> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(PharmacyReview::getPharmacistId, pharmacistId)
+               .orderByDesc(PharmacyReview::getCreatedAt);
+        return reviewMapper.selectPage(pageParam, wrapper);
+    }
+
+    /**
+     * 统计今日通过数量
+     */
+    public long countTodayApproved(Long pharmacistId) {
+        LambdaQueryWrapper<PharmacyReview> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(PharmacyReview::getPharmacistId, pharmacistId)
+               .eq(PharmacyReview::getResult, "APPROVED")
+               .ge(PharmacyReview::getCreatedAt, java.time.LocalDate.now().atStartOfDay());
+        return reviewMapper.selectCount(wrapper);
+    }
+
+    /**
+     * 统计今日驳回数量
+     */
+    public long countTodayRejected(Long pharmacistId) {
+        LambdaQueryWrapper<PharmacyReview> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(PharmacyReview::getPharmacistId, pharmacistId)
+               .eq(PharmacyReview::getResult, "REJECTED")
+               .ge(PharmacyReview::getCreatedAt, java.time.LocalDate.now().atStartOfDay());
+        return reviewMapper.selectCount(wrapper);
     }
 }

@@ -17,14 +17,24 @@ public class PharmacyReview {
     private Long id;
     
     private Long prescriptionId;
+    
+    @TableField("reviewer_id")
     private Long pharmacistId;
     
+    @TableField("review_status")
     private String result;              // APPROVED/REJECTED
     private String riskLevel;           // LOW/MEDIUM/HIGH
-    private String riskDescription;     // 风险描述
+    private String highRiskItems;       // 高风险项
+    private String mediumRiskItems;     // 中风险项
+    private String lowRiskItems;        // 低风险项
     private String rejectReason;        // 驳回原因
     private String suggestion;          // 建议
+    private String aiRiskHint;          // AI风险提示
+    private LocalDateTime reviewedAt;   // 审核时间
     
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
+    
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updatedAt;
 }

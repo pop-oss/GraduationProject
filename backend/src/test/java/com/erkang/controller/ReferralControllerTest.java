@@ -1,5 +1,6 @@
 package com.erkang.controller;
 
+import com.erkang.domain.dto.CreateReferralRequest;
 import com.erkang.domain.entity.Referral;
 import com.erkang.service.ReferralService;
 import net.jqwik.api.*;
@@ -38,10 +39,11 @@ class ReferralControllerTest {
             @ForAll @LongRange(min = 1, max = 10000) Long toDoctorId,
             @ForAll @AlphaChars @StringLength(min = 10, max = 200) String reason) {
         
-        Referral referral = new Referral();
-        referral.setPatientId(patientId);
-        referral.setToDoctorId(toDoctorId);
-        referral.setReason(reason);
+        CreateReferralRequest request = new CreateReferralRequest();
+        request.setConsultationId("1");
+        request.setToDoctorId(toDoctorId);
+        request.setDescription(reason);
+        request.setSummary("病历摘要");
         
         Referral createdReferral = new Referral();
         createdReferral.setId(1L);
@@ -50,9 +52,9 @@ class ReferralControllerTest {
         createdReferral.setReason(reason);
         createdReferral.setStatus("PENDING");
         
-        when(referralService.createReferral(any(Referral.class))).thenReturn(createdReferral);
+        when(referralService.createReferralFromRequest(anyLong(), any(CreateReferralRequest.class))).thenReturn(createdReferral);
         
-        var result = referralController.create(referral);
+        var result = referralController.create(request);
         
         assertThat(result).isNotNull();
         assertThat(result.getData()).isNotNull();

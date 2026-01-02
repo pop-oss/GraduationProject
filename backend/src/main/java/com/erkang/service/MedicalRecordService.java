@@ -3,8 +3,11 @@ package com.erkang.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.erkang.common.BusinessException;
 import com.erkang.common.ErrorCode;
+import com.erkang.domain.dto.CreateMedicalRecordRequest;
+import com.erkang.domain.entity.Consultation;
 import com.erkang.domain.entity.MedicalAttachment;
 import com.erkang.domain.entity.MedicalRecord;
+import com.erkang.mapper.ConsultationMapper;
 import com.erkang.mapper.MedicalAttachmentMapper;
 import com.erkang.mapper.MedicalRecordMapper;
 import com.erkang.security.Auditable;
@@ -31,6 +34,72 @@ public class MedicalRecordService {
 
     private final MedicalRecordMapper recordMapper;
     private final MedicalAttachmentMapper attachmentMapper;
+    private final ConsultationMapper consultationMapper;
+
+    /**
+     * 创建或更新病历
+     */
+    @Transactional
+    @Auditable(action = "SAVE_MEDICAL_RECORD", module = "medical_record")
+    public MedicalRecord createOrUpdateRecord(CreateMedicalRecordRequest request, Long doctorId) {
+        Long consultationId = request.getConsultationId();
+        
+        // 获取问诊信息以获取patientId
+        Consultation consultation = consultationMapper.selectById(consultationId);
+        if (consultation == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND, "问诊不存在");
+        }
+        Long patientId = consultation.getPatientId();
+        
+        // 检查是否已存在病历
+        LambdaQueryWrapper<MedicalRecord> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(MedicalRecord::getConsultationId, consultationId);
+        MedicalRecord existingRecord = recordMapper.selectOne(wrapper);
+        
+        if (existingRecord != null) {
+            // 更新现有病历
+            if ("SUBMITTED".equals(existingRecord.getStatus())) {
+                throw new BusinessException(ErrorCode.FORBIDDEN, "已提交的病历不允许修改");
+            }
+            
+            if (request.getChiefComplaint() != null) existingRecord.setChiefComplaint(request.getChiefComplaint());
+            if (request.getPresentIllness() != null) existingRecord.setPresentIllness(request.getPresentIllness());
+            if (request.getPastHistory() != null) existingRecord.setPastHistory(request.getPastHistory());
+            if (request.getAllergies() != null) existingRecord.setAllergyHistory(request.getAllergies());
+            if (request.getPhysicalExam() != null) existingRecord.setPhysicalExam(request.getPhysicalExam());
+            if (request.getDiagnosis() != null) existingRecord.setDiagnosis(request.getDiagnosis());
+            if (request.getTreatment() != null) existingRecord.setTreatmentPlan(request.getTreatment());
+            if (request.getAdvice() != null) existingRecord.setFollowupAdvice(request.getAdvice());
+            existingRecord.setUpdatedAt(LocalDateTime.now());
+            
+            recordMapper.updateById(existingRecord);
+            log.info("更新病历: recordNo={}, consultationId={}", existingRecord.getRecordNo(), consultationId);
+            return existingRecord;
+        } else {
+            // 创建新病历
+            MedicalRecord record = new MedicalRecord();
+            record.setConsultationId(consultationId);
+            record.setPatientId(patientId);
+            record.setDoctorId(doctorId);
+            record.setRecordNo(generateRecordNo());
+            record.setStatus("DRAFT");
+            record.setAiConfirmed(0);
+            record.setChiefComplaint(request.getChiefComplaint());
+            record.setPresentIllness(request.getPresentIllness());
+            record.setPastHistory(request.getPastHistory());
+            record.setAllergyHistory(request.getAllergies());
+            record.setPhysicalExam(request.getPhysicalExam());
+            record.setDiagnosis(request.getDiagnosis());
+            record.setTreatmentPlan(request.getTreatment());
+            record.setFollowupAdvice(request.getAdvice());
+            record.setCreatedAt(LocalDateTime.now());
+            record.setUpdatedAt(LocalDateTime.now());
+            
+            recordMapper.insert(record);
+            log.info("创建病历: recordNo={}, consultationId={}", record.getRecordNo(), consultationId);
+            return record;
+        }
+    }
 
     /**
      * 创建病历

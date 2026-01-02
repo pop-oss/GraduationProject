@@ -1,6 +1,7 @@
 package com.erkang.controller;
 
 import com.erkang.common.Result;
+import com.erkang.domain.dto.CreateReferralRequest;
 import com.erkang.domain.entity.Referral;
 import com.erkang.security.RequireRole;
 import com.erkang.security.UserContext;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 转诊控制器
@@ -27,10 +29,9 @@ public class ReferralController {
     @Operation(summary = "发起转诊")
     @PostMapping
     @RequireRole({"DOCTOR_PRIMARY", "DOCTOR_EXPERT"})
-    public Result<Referral> create(@RequestBody Referral referral) {
+    public Result<Referral> create(@RequestBody CreateReferralRequest request) {
         Long doctorId = UserContext.getUserId();
-        referral.setFromDoctorId(doctorId);
-        Referral created = referralService.createReferral(referral);
+        Referral created = referralService.createReferralFromRequest(doctorId, request);
         return Result.success(created);
     }
 
@@ -65,6 +66,46 @@ public class ReferralController {
     public Result<Referral> getById(@PathVariable Long id) {
         Referral referral = referralService.getById(id);
         return Result.success(referral);
+    }
+
+    @Operation(summary = "查询我的转诊列表（发起和接收）")
+    @GetMapping
+    @RequireRole({"DOCTOR_PRIMARY", "DOCTOR_EXPERT"})
+    public Result<Map<String, Object>> listMy(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(required = false) String status) {
+        Long doctorId = UserContext.getUserId();
+        List<Referral> fromMe = referralService.listByFromDoctorId(doctorId);
+        List<Referral> toMe = referralService.listByToDoctorId(doctorId);
+        
+        // 合并并去重
+        java.util.Set<Long> ids = new java.util.HashSet<>();
+        List<Referral> all = new java.util.ArrayList<>();
+        for (Referral r : fromMe) {
+            if (ids.add(r.getId())) all.add(r);
+        }
+        for (Referral r : toMe) {
+            if (ids.add(r.getId())) all.add(r);
+        }
+        
+        // 按状态筛选
+        if (status != null && !status.isEmpty()) {
+            all = all.stream().filter(r -> status.equals(r.getStatus())).collect(java.util.stream.Collectors.toList());
+        }
+        
+        // 按创建时间倒序
+        all.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        
+        int total = all.size();
+        int start = (page - 1) * pageSize;
+        int end = Math.min(start + pageSize, total);
+        List<Referral> list = start < total ? all.subList(start, end) : java.util.Collections.emptyList();
+        
+        Map<String, Object> result = new java.util.HashMap<>();
+        result.put("list", list);
+        result.put("total", total);
+        return Result.success(result);
     }
 
     @Operation(summary = "查询我发起的转诊")

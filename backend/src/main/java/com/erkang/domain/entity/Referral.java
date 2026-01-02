@@ -24,16 +24,19 @@ public class Referral {
     private Long toDepartmentId;        // 转入科室
     
     private String referralNo;          // 转诊编号
+    
+    @TableField("referral_reason")
     private String reason;              // 转诊原因
+    
+    @TableField("clinical_summary")
     private String medicalSummary;      // 病历摘要（必填）
-    private String examResults;         // 检查资料（必填）
-    private String urgencyLevel;        // 紧急程度: NORMAL/URGENT/EMERGENCY
     
     private String status;              // PENDING/ACCEPTED/REJECTED/COMPLETED/CANCELED
     private String rejectReason;        // 拒绝原因
     
+    private LocalDateTime statusUpdatedAt;
     private LocalDateTime acceptedAt;
-    private LocalDateTime completedAt;
+    private Long newConsultationId;     // 新问诊ID
     
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;

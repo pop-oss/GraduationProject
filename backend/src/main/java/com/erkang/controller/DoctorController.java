@@ -34,6 +34,14 @@ public class DoctorController {
         return Result.success(doctorService.listDoctors(current, size, departmentId, isExpert));
     }
     
+    @Operation(summary = "获取专家医生列表")
+    @GetMapping("/api/doctors/experts")
+    public Result<Page<DoctorVO>> listExperts(
+            @RequestParam(defaultValue = "1") int current,
+            @RequestParam(defaultValue = "100") int size) {
+        return Result.success(doctorService.listDoctors(current, size, null, true));
+    }
+    
     @Operation(summary = "获取医生详情")
     @GetMapping({"/api/doctor/{doctorId}", "/api/doctors/{doctorId}"})
     public Result<DoctorVO> getDoctorDetail(@PathVariable Long doctorId) {

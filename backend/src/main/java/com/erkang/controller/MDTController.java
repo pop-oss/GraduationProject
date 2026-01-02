@@ -1,9 +1,16 @@
 package com.erkang.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.erkang.common.Result;
+import com.erkang.domain.dto.CreateMDTRequest;
+import com.erkang.domain.entity.Consultation;
 import com.erkang.domain.entity.MDTCase;
 import com.erkang.domain.entity.MDTConclusion;
 import com.erkang.domain.entity.MDTMember;
+import com.erkang.mapper.ConsultationMapper;
+import com.erkang.mapper.MDTCaseMapper;
+import com.erkang.mapper.MDTMemberMapper;
 import com.erkang.security.Auditable;
 import com.erkang.security.RequireRole;
 import com.erkang.security.UserContext;
@@ -11,7 +18,9 @@ import com.erkang.service.MDTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * MDT会诊控制器
@@ -23,6 +32,59 @@ import java.util.List;
 public class MDTController {
 
     private final MDTService mdtService;
+    private final MDTCaseMapper mdtCaseMapper;
+    private final MDTMemberMapper mdtMemberMapper;
+    private final ConsultationMapper consultationMapper;
+
+    /**
+     * 获取当前医生相关的MDT列表（分页）
+     */
+    @GetMapping
+    @RequireRole({"DOCTOR_PRIMARY", "DOCTOR_EXPERT"})
+    public Result<Map<String, Object>> getMDTList(
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false) String status) {
+        Long doctorId = UserContext.getUserId();
+        
+        // 先查询医生参与的所有MDT ID
+        LambdaQueryWrapper<MDTMember> memberWrapper = new LambdaQueryWrapper<>();
+        memberWrapper.eq(MDTMember::getDoctorId, doctorId);
+        List<MDTMember> members = mdtMemberMapper.selectList(memberWrapper);
+        List<Long> mdtIds = members.stream().map(MDTMember::getMdtId).toList();
+        
+        // 分页查询MDT
+        Page<MDTCase> pageParam = new Page<>(page, pageSize);
+        LambdaQueryWrapper<MDTCase> wrapper = new LambdaQueryWrapper<>();
+        
+        if (!mdtIds.isEmpty()) {
+            wrapper.in(MDTCase::getId, mdtIds);
+        } else {
+            // 如果没有参与任何MDT，返回空列表
+            Map<String, Object> data = new HashMap<>();
+            data.put("list", List.of());
+            data.put("total", 0);
+            data.put("page", page);
+            data.put("pageSize", pageSize);
+            return Result.success(data);
+        }
+        
+        if (status != null && !status.isEmpty()) {
+            wrapper.eq(MDTCase::getStatus, status);
+        }
+        
+        wrapper.orderByDesc(MDTCase::getCreatedAt);
+        
+        Page<MDTCase> result = mdtCaseMapper.selectPage(pageParam, wrapper);
+        
+        Map<String, Object> data = new HashMap<>();
+        data.put("list", result.getRecords());
+        data.put("total", result.getTotal());
+        data.put("page", result.getCurrent());
+        data.put("pageSize", result.getSize());
+        
+        return Result.success(data);
+    }
 
     /**
      * 发起会诊
@@ -30,10 +92,45 @@ public class MDTController {
     @PostMapping
     @RequireRole({"DOCTOR_PRIMARY", "DOCTOR_EXPERT"})
     @Auditable(action = "CREATE_MDT", module = "mdt")
-    public Result<MDTCase> createMDT(@RequestBody MDTCase mdtCase) {
+    public Result<MDTCase> createMDT(@RequestBody CreateMDTRequest request) {
         Long userId = UserContext.getUserId();
+        
+        MDTCase mdtCase = new MDTCase();
         mdtCase.setInitiatorId(userId);
+        mdtCase.setTitle(request.getTitle());
+        mdtCase.setClinicalSummary(request.getDescription());
+        
+        // 处理 consultationId - 可能是数字ID或问诊编号
+        if (request.getConsultationId() != null && !request.getConsultationId().isEmpty()) {
+            String consultationIdStr = request.getConsultationId();
+            try {
+                // 尝试直接解析为数字ID
+                mdtCase.setConsultationId(Long.parseLong(consultationIdStr));
+            } catch (NumberFormatException e) {
+                // 如果不是数字，可能是问诊编号，根据编号查找
+                LambdaQueryWrapper<Consultation> wrapper = new LambdaQueryWrapper<>();
+                wrapper.eq(Consultation::getConsultationNo, consultationIdStr);
+                Consultation consultation = consultationMapper.selectOne(wrapper);
+                if (consultation != null) {
+                    mdtCase.setConsultationId(consultation.getId());
+                    mdtCase.setPatientId(consultation.getPatientId());
+                }
+            }
+        }
+        
         MDTCase created = mdtService.createMDT(mdtCase);
+        
+        // 邀请专家
+        if (request.getMemberIds() != null) {
+            for (Long doctorId : request.getMemberIds()) {
+                try {
+                    mdtService.inviteMember(created.getId(), doctorId);
+                } catch (Exception e) {
+                    // 忽略邀请失败的情况
+                }
+            }
+        }
+        
         return Result.success(created);
     }
 

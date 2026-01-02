@@ -2,6 +2,7 @@ package com.erkang.service;
 
 import com.erkang.common.BusinessException;
 import com.erkang.domain.entity.Referral;
+import com.erkang.mapper.ConsultationMapper;
 import com.erkang.mapper.ReferralMapper;
 import net.jqwik.api.*;
 import net.jqwik.api.constraints.LongRange;
@@ -19,6 +20,13 @@ import static org.mockito.Mockito.when;
  */
 class ReferralPropertyTest {
 
+    private ReferralService createService() {
+        ReferralMapper referralMapper = Mockito.mock(ReferralMapper.class);
+        ConsultationMapper consultationMapper = Mockito.mock(ConsultationMapper.class);
+        when(referralMapper.insert(any())).thenReturn(1);
+        return new ReferralService(referralMapper, consultationMapper);
+    }
+
     /**
      * Property 9.1: 转诊必须包含病历摘要
      * *For any* referral without medical summary, creation should fail
@@ -29,18 +37,15 @@ class ReferralPropertyTest {
             @ForAll @LongRange(min = 1, max = 1000000) Long fromDoctorId,
             @ForAll @LongRange(min = 1, max = 1000000) Long toDoctorId,
             @ForAll("validStrings") String reason,
-            @ForAll("validStrings") String examResults,
             @ForAll("emptyOrNullStrings") String medicalSummary) {
         
-        ReferralMapper referralMapper = Mockito.mock(ReferralMapper.class);
-        ReferralService service = new ReferralService(referralMapper);
+        ReferralService service = createService();
         
         Referral referral = new Referral();
         referral.setPatientId(patientId);
         referral.setFromDoctorId(fromDoctorId);
         referral.setToDoctorId(toDoctorId);
         referral.setReason(reason);
-        referral.setExamResults(examResults);
         referral.setMedicalSummary(medicalSummary);
         
         assertThatThrownBy(() -> service.createReferral(referral))
@@ -49,36 +54,7 @@ class ReferralPropertyTest {
     }
 
     /**
-     * Property 9.2: 转诊必须包含检查资料
-     * *For any* referral without exam results, creation should fail
-     */
-    @Property(tries = 100)
-    void referralRequiresExamResults(
-            @ForAll @LongRange(min = 1, max = 1000000) Long patientId,
-            @ForAll @LongRange(min = 1, max = 1000000) Long fromDoctorId,
-            @ForAll @LongRange(min = 1, max = 1000000) Long toDoctorId,
-            @ForAll("validStrings") String reason,
-            @ForAll("validStrings") String medicalSummary,
-            @ForAll("emptyOrNullStrings") String examResults) {
-        
-        ReferralMapper referralMapper = Mockito.mock(ReferralMapper.class);
-        ReferralService service = new ReferralService(referralMapper);
-        
-        Referral referral = new Referral();
-        referral.setPatientId(patientId);
-        referral.setFromDoctorId(fromDoctorId);
-        referral.setToDoctorId(toDoctorId);
-        referral.setReason(reason);
-        referral.setMedicalSummary(medicalSummary);
-        referral.setExamResults(examResults);
-        
-        assertThatThrownBy(() -> service.createReferral(referral))
-            .isInstanceOf(BusinessException.class)
-            .hasMessageContaining("检查资料为必填项");
-    }
-
-    /**
-     * Property 9.3: 转诊必须包含转诊原因
+     * Property 9.2: 转诊必须包含转诊原因
      * *For any* referral without reason, creation should fail
      */
     @Property(tries = 100)
@@ -87,11 +63,9 @@ class ReferralPropertyTest {
             @ForAll @LongRange(min = 1, max = 1000000) Long fromDoctorId,
             @ForAll @LongRange(min = 1, max = 1000000) Long toDoctorId,
             @ForAll("validStrings") String medicalSummary,
-            @ForAll("validStrings") String examResults,
             @ForAll("emptyOrNullStrings") String reason) {
         
-        ReferralMapper referralMapper = Mockito.mock(ReferralMapper.class);
-        ReferralService service = new ReferralService(referralMapper);
+        ReferralService service = createService();
         
         Referral referral = new Referral();
         referral.setPatientId(patientId);
@@ -99,7 +73,6 @@ class ReferralPropertyTest {
         referral.setToDoctorId(toDoctorId);
         referral.setReason(reason);
         referral.setMedicalSummary(medicalSummary);
-        referral.setExamResults(examResults);
         
         assertThatThrownBy(() -> service.createReferral(referral))
             .isInstanceOf(BusinessException.class)
@@ -107,7 +80,7 @@ class ReferralPropertyTest {
     }
 
     /**
-     * Property 9.4: 完整数据的转诊可以创建成功
+     * Property 9.3: 完整数据的转诊可以创建成功
      * *For any* referral with complete data, creation should succeed
      */
     @Property(tries = 100)
@@ -116,13 +89,9 @@ class ReferralPropertyTest {
             @ForAll @LongRange(min = 1, max = 1000000) Long fromDoctorId,
             @ForAll @LongRange(min = 1, max = 1000000) Long toDoctorId,
             @ForAll("validStrings") String reason,
-            @ForAll("validStrings") String medicalSummary,
-            @ForAll("validStrings") String examResults) {
+            @ForAll("validStrings") String medicalSummary) {
         
-        ReferralMapper referralMapper = Mockito.mock(ReferralMapper.class);
-        ReferralService service = new ReferralService(referralMapper);
-        
-        when(referralMapper.insert(any())).thenReturn(1);
+        ReferralService service = createService();
         
         Referral referral = new Referral();
         referral.setPatientId(patientId);
@@ -130,7 +99,6 @@ class ReferralPropertyTest {
         referral.setToDoctorId(toDoctorId);
         referral.setReason(reason);
         referral.setMedicalSummary(medicalSummary);
-        referral.setExamResults(examResults);
         
         Referral created = service.createReferral(referral);
         
@@ -140,15 +108,14 @@ class ReferralPropertyTest {
     }
 
     /**
-     * Property 9.5: 转诊记录不可删除
+     * Property 9.4: 转诊记录不可删除
      * *For any* referral, delete operation should always be rejected
      */
     @Property(tries = 100)
     void referralCannotBeDeleted(
             @ForAll @LongRange(min = 1, max = 1000000) Long referralId) {
         
-        ReferralMapper referralMapper = Mockito.mock(ReferralMapper.class);
-        ReferralService service = new ReferralService(referralMapper);
+        ReferralService service = createService();
         
         assertThatThrownBy(() -> service.deleteReferral(referralId))
             .isInstanceOf(BusinessException.class)

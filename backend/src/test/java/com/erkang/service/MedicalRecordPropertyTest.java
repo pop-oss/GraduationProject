@@ -2,6 +2,7 @@ package com.erkang.service;
 
 import com.erkang.common.BusinessException;
 import com.erkang.domain.entity.MedicalRecord;
+import com.erkang.mapper.ConsultationMapper;
 import com.erkang.mapper.MedicalAttachmentMapper;
 import com.erkang.mapper.MedicalRecordMapper;
 import net.jqwik.api.*;
@@ -32,7 +33,8 @@ class MedicalRecordPropertyTest {
         
         MedicalRecordMapper recordMapper = Mockito.mock(MedicalRecordMapper.class);
         MedicalAttachmentMapper attachmentMapper = Mockito.mock(MedicalAttachmentMapper.class);
-        MedicalRecordService service = new MedicalRecordService(recordMapper, attachmentMapper);
+        ConsultationMapper consultationMapper = Mockito.mock(ConsultationMapper.class);
+        MedicalRecordService service = new MedicalRecordService(recordMapper, attachmentMapper, consultationMapper);
         
         // 模拟已提交的病历
         MedicalRecord submittedRecord = new MedicalRecord();
@@ -59,7 +61,8 @@ class MedicalRecordPropertyTest {
         
         MedicalRecordMapper recordMapper = Mockito.mock(MedicalRecordMapper.class);
         MedicalAttachmentMapper attachmentMapper = Mockito.mock(MedicalAttachmentMapper.class);
-        MedicalRecordService service = new MedicalRecordService(recordMapper, attachmentMapper);
+        ConsultationMapper consultationMapper = Mockito.mock(ConsultationMapper.class);
+        MedicalRecordService service = new MedicalRecordService(recordMapper, attachmentMapper, consultationMapper);
         
         // 删除操作应该始终被拒绝
         assertThatThrownBy(() -> service.deleteRecord(recordId))
@@ -78,7 +81,8 @@ class MedicalRecordPropertyTest {
         
         MedicalRecordMapper recordMapper = Mockito.mock(MedicalRecordMapper.class);
         MedicalAttachmentMapper attachmentMapper = Mockito.mock(MedicalAttachmentMapper.class);
-        MedicalRecordService service = new MedicalRecordService(recordMapper, attachmentMapper);
+        ConsultationMapper consultationMapper = Mockito.mock(ConsultationMapper.class);
+        MedicalRecordService service = new MedicalRecordService(recordMapper, attachmentMapper, consultationMapper);
         
         // 模拟草稿状态的病历
         MedicalRecord draftRecord = new MedicalRecord();
@@ -110,7 +114,8 @@ class MedicalRecordPropertyTest {
         
         MedicalRecordMapper recordMapper = Mockito.mock(MedicalRecordMapper.class);
         MedicalAttachmentMapper attachmentMapper = Mockito.mock(MedicalAttachmentMapper.class);
-        MedicalRecordService service = new MedicalRecordService(recordMapper, attachmentMapper);
+        ConsultationMapper consultationMapper = Mockito.mock(ConsultationMapper.class);
+        MedicalRecordService service = new MedicalRecordService(recordMapper, attachmentMapper, consultationMapper);
         
         incompleteRecord.setId(recordId);
         incompleteRecord.setStatus("DRAFT");

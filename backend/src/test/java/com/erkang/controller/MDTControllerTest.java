@@ -1,8 +1,12 @@
 package com.erkang.controller;
 
+import com.erkang.domain.dto.CreateMDTRequest;
 import com.erkang.domain.entity.MDTCase;
 import com.erkang.domain.entity.MDTConclusion;
 import com.erkang.domain.entity.MDTMember;
+import com.erkang.mapper.ConsultationMapper;
+import com.erkang.mapper.MDTCaseMapper;
+import com.erkang.mapper.MDTMemberMapper;
 import com.erkang.service.MDTService;
 import net.jqwik.api.*;
 import net.jqwik.api.constraints.*;
@@ -22,12 +26,18 @@ import static org.mockito.Mockito.*;
 class MDTControllerTest {
 
     private MDTService mdtService;
+    private MDTCaseMapper mdtCaseMapper;
+    private MDTMemberMapper mdtMemberMapper;
+    private ConsultationMapper consultationMapper;
     private MDTController mdtController;
 
     @BeforeProperty
     void setUp() {
         mdtService = mock(MDTService.class);
-        mdtController = new MDTController(mdtService);
+        mdtCaseMapper = mock(MDTCaseMapper.class);
+        mdtMemberMapper = mock(MDTMemberMapper.class);
+        consultationMapper = mock(ConsultationMapper.class);
+        mdtController = new MDTController(mdtService, mdtCaseMapper, mdtMemberMapper, consultationMapper);
     }
 
     /**
@@ -36,26 +46,27 @@ class MDTControllerTest {
      */
     @Property(tries = 100)
     void createMDT_shouldCreateNewMDTCase(
-            @ForAll @LongRange(min = 1, max = 10000) Long patientId,
+            @ForAll @LongRange(min = 1, max = 10000) Long consultationId,
             @ForAll @AlphaChars @StringLength(min = 10, max = 200) String title) {
         
-        MDTCase mdtCase = new MDTCase();
-        mdtCase.setPatientId(patientId);
-        mdtCase.setTitle(title);
+        CreateMDTRequest request = new CreateMDTRequest();
+        request.setConsultationId(String.valueOf(consultationId));
+        request.setTitle(title);
+        request.setDescription("测试病情描述");
         
         MDTCase createdCase = new MDTCase();
         createdCase.setId(1L);
-        createdCase.setPatientId(patientId);
+        createdCase.setConsultationId(consultationId);
         createdCase.setTitle(title);
         createdCase.setStatus("PENDING");
         
         when(mdtService.createMDT(any(MDTCase.class))).thenReturn(createdCase);
         
-        var result = mdtController.createMDT(mdtCase);
+        var result = mdtController.createMDT(request);
         
         assertThat(result).isNotNull();
         assertThat(result.getData()).isNotNull();
-        assertThat(result.getData().getPatientId()).isEqualTo(patientId);
+        assertThat(result.getData().getTitle()).isEqualTo(title);
         assertThat(result.getData().getStatus()).isEqualTo("PENDING");
     }
 

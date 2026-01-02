@@ -8,13 +8,18 @@ import com.erkang.mapper.AIChatMessageMapper;
 import com.erkang.mapper.AIChatSessionMapper;
 import com.erkang.mapper.AITaskMapper;
 import com.erkang.security.Auditable;
-import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,12 +29,35 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class AIService {
 
     private final AITaskMapper aiTaskMapper;
     private final AIChatSessionMapper aiChatSessionMapper;
     private final AIChatMessageMapper aiChatMessageMapper;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+
+    @Value("${deepseek.api-key:}")
+    private String apiKey;
+
+    @Value("${deepseek.api-url:https://api.deepseek.com/chat/completions}")
+    private String apiUrl;
+
+    @Value("${deepseek.model:deepseek-chat}")
+    private String model;
+
+    @Value("${deepseek.system-prompt:你是耳康云诊的AI健康助手}")
+    private String systemPrompt;
+
+    public AIService(AITaskMapper aiTaskMapper, 
+                     AIChatSessionMapper aiChatSessionMapper,
+                     AIChatMessageMapper aiChatMessageMapper) {
+        this.aiTaskMapper = aiTaskMapper;
+        this.aiChatSessionMapper = aiChatSessionMapper;
+        this.aiChatMessageMapper = aiChatMessageMapper;
+        this.restTemplate = new RestTemplate();
+        this.objectMapper = new ObjectMapper();
+    }
 
     // 敏感信息正则模式
     private static final Pattern PHONE_PATTERN = Pattern.compile("1[3-9]\\d{9}");
@@ -64,7 +92,7 @@ public class AIService {
     }
 
     /**
-     * 健康问答
+     * 健康问答（支持上下文对话）
      * _Requirements: 10.1_
      */
     @Transactional
@@ -75,23 +103,34 @@ public class AIService {
         // 1. 输入脱敏
         String sanitizedQuestion = sanitizeInput(question);
         
-        // 2. 保存用户消息
+        // 2. 获取历史消息（用于上下文）
+        List<AIChatMessage> historyMessages = listMessagesBySessionId(sessionId);
+        
+        // 3. 如果是第一条消息，设置会话标题
+        if (historyMessages.isEmpty()) {
+            updateSessionTitle(sessionId, sanitizedQuestion);
+        }
+        
+        // 4. 保存用户消息
         saveMessage(sessionId, "USER", sanitizedQuestion);
         
-        // 3. 创建AI任务
+        // 5. 创建AI任务
         AITask task = createTask("HEALTH_QA", userId, sanitizedQuestion);
         
         try {
-            // 4. 调用AI模型（模拟）
-            String rawResponse = callAIModel(sanitizedQuestion);
+            // 6. 调用AI模型（带上下文）
+            String rawResponse = callAIModelWithContext(sanitizedQuestion, historyMessages);
             
-            // 5. 输出合规校验
+            // 7. 输出合规校验
             String compliantResponse = ensureCompliance(rawResponse, sanitizedQuestion);
             
-            // 6. 保存AI响应
+            // 8. 保存AI响应
             saveMessage(sessionId, "ASSISTANT", compliantResponse);
             
-            // 7. 更新任务状态
+            // 9. 更新会话时间
+            updateSessionTime(sessionId);
+            
+            // 10. 更新任务状态
             long latency = System.currentTimeMillis() - startTime;
             completeTask(task, compliantResponse, (int) latency);
             
@@ -101,6 +140,31 @@ public class AIService {
         } catch (Exception e) {
             failTask(task, e.getMessage());
             throw e;
+        }
+    }
+    
+    /**
+     * 更新会话时间和标题
+     */
+    private void updateSessionTime(Long sessionId) {
+        AIChatSession session = aiChatSessionMapper.selectById(sessionId);
+        if (session != null) {
+            session.setUpdatedAt(LocalDateTime.now());
+            aiChatSessionMapper.updateById(session);
+        }
+    }
+    
+    /**
+     * 更新会话标题（使用第一条用户消息）
+     */
+    private void updateSessionTitle(Long sessionId, String firstMessage) {
+        AIChatSession session = aiChatSessionMapper.selectById(sessionId);
+        if (session != null && (session.getTitle() == null || session.getTitle().isEmpty())) {
+            // 截取前30个字符作为标题
+            String title = firstMessage.length() > 30 ? firstMessage.substring(0, 30) + "..." : firstMessage;
+            session.setTitle(title);
+            session.setUpdatedAt(LocalDateTime.now());
+            aiChatSessionMapper.updateById(session);
         }
     }
 
@@ -200,11 +264,112 @@ public class AIService {
     }
 
     /**
-     * 模拟调用AI模型
+     * 调用AI模型（带上下文）
+     */
+    private String callAIModelWithContext(String question, List<AIChatMessage> historyMessages) {
+        // 如果没有配置 API Key，返回模拟响应
+        if (apiKey == null || apiKey.isEmpty() || apiKey.equals("your-deepseek-api-key-here")) {
+            log.warn("DeepSeek API Key 未配置，使用模拟响应");
+            return getMockResponse(question);
+        }
+
+        try {
+            // 构建请求头
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setBearerAuth(apiKey);
+
+            // 构建消息列表（包含历史上下文）
+            java.util.ArrayList<Map<String, String>> messages = new java.util.ArrayList<>();
+            
+            // 添加系统提示
+            messages.add(Map.of("role", "system", "content", systemPrompt));
+            
+            // 添加历史消息（最多保留最近10轮对话，避免超出token限制）
+            int maxHistory = Math.min(historyMessages.size(), 20); // 10轮 = 20条消息
+            int startIndex = Math.max(0, historyMessages.size() - maxHistory);
+            for (int i = startIndex; i < historyMessages.size(); i++) {
+                AIChatMessage msg = historyMessages.get(i);
+                String role = "USER".equals(msg.getRole()) ? "user" : "assistant";
+                messages.add(Map.of("role", role, "content", msg.getContent()));
+            }
+            
+            // 添加当前问题
+            messages.add(Map.of("role", "user", "content", question));
+
+            // 构建请求体
+            Map<String, Object> requestBody = Map.of(
+                "model", model,
+                "messages", messages,
+                "max_tokens", 1024,
+                "temperature", 0.7
+            );
+
+            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
+
+            // 调用 DeepSeek API
+            ResponseEntity<String> response = restTemplate.exchange(
+                apiUrl,
+                HttpMethod.POST,
+                entity,
+                String.class
+            );
+
+            // 解析响应
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                JsonNode root = objectMapper.readTree(response.getBody());
+                JsonNode choices = root.path("choices");
+                if (choices.isArray() && choices.size() > 0) {
+                    String content = choices.get(0).path("message").path("content").asText();
+                    log.info("DeepSeek API 调用成功，历史消息数: {}", historyMessages.size());
+                    return content;
+                }
+            }
+
+            log.error("DeepSeek API 响应异常: {}", response.getBody());
+            return getMockResponse(question);
+
+        } catch (Exception e) {
+            log.error("调用 DeepSeek API 失败: {}", e.getMessage());
+            return getMockResponse(question);
+        }
+    }
+
+    /**
+     * 模拟调用AI模型（无上下文，保留兼容）
      */
     private String callAIModel(String question) {
-        // 实际项目中这里会调用大模型API
-        // 这里返回模拟响应
+        return callAIModelWithContext(question, List.of());
+    }
+
+    /**
+     * 获取模拟响应（API 不可用时的备用）
+     */
+    private String getMockResponse(String question) {
+        // 根据问题关键词返回不同的模拟响应
+        if (question.contains("耳鸣") || question.contains("耳朵响")) {
+            return "耳鸣是一种常见症状，可能由多种原因引起：\n" +
+                   "1. 噪音暴露或听力损伤\n" +
+                   "2. 耳部感染或耳垢堵塞\n" +
+                   "3. 压力和疲劳\n" +
+                   "4. 某些药物的副作用\n\n" +
+                   "建议您：保持良好作息，避免噪音环境，如症状持续请及时就医检查。";
+        } else if (question.contains("鼻塞") || question.contains("鼻子不通")) {
+            return "鼻塞可能由以下原因引起：\n" +
+                   "1. 感冒或流感\n" +
+                   "2. 过敏性鼻炎\n" +
+                   "3. 鼻窦炎\n" +
+                   "4. 鼻中隔偏曲\n\n" +
+                   "建议您：保持室内湿度，多喝温水，可用生理盐水冲洗鼻腔。如症状持续超过一周，请就医检查。";
+        } else if (question.contains("咽喉") || question.contains("嗓子") || question.contains("喉咙")) {
+            return "咽喉不适可能的原因：\n" +
+                   "1. 急性咽炎或扁桃体炎\n" +
+                   "2. 用嗓过度\n" +
+                   "3. 胃食管反流\n" +
+                   "4. 空气干燥\n\n" +
+                   "建议您：多喝温水，避免辛辣刺激食物，保持室内湿度。如伴有发热或症状加重，请及时就医。";
+        }
+        
         return "根据您的描述，这可能是常见的耳鼻喉科症状。建议您：\n" +
                "1. 保持充足休息\n" +
                "2. 多饮水\n" +

@@ -3,7 +3,6 @@ package com.erkang.domain.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -20,16 +19,14 @@ public class PrescriptionItem {
     private Long prescriptionId;
     
     private String drugName;            // 药品名称
-    private String drugCode;            // 药品编码
-    private String specification;       // 规格
-    private String dosage;              // 单次剂量
-    private String frequency;           // 用药频次
-    private String route;               // 给药途径
-    private Integer days;               // 用药天数
+    private String drugSpec;            // 规格
+    private String dosage;              // 用法用量
+    private String frequency;           // 频次
+    private String duration;            // 疗程
     private Integer quantity;           // 数量
     private String unit;                // 单位
-    private BigDecimal price;           // 单价
-    private String remark;              // 备注
+    private String notes;               // 备注
+    private Integer sortOrder;          // 排序
     
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;

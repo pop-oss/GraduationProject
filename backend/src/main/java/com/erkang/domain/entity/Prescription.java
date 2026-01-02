@@ -22,12 +22,12 @@ public class Prescription {
     private String prescriptionNo;
     
     private String diagnosis;           // 诊断
-    private String remark;              // 备注
+    private String notes;               // 备注
     
     private String status;              // DRAFT/PENDING_REVIEW/APPROVED/REJECTED/DISPENSED
-    private LocalDateTime submittedAt;  // 提交时间
-    private LocalDateTime reviewedAt;   // 审核时间
-    private LocalDateTime dispensedAt;  // 发药时间
+    private LocalDateTime statusUpdatedAt;  // 状态更新时间
+    private LocalDateTime submittedAt;      // 提交时间
+    private LocalDateTime approvedAt;       // 审核通过时间
     
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;

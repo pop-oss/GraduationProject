@@ -1,6 +1,7 @@
 package com.erkang.controller;
 
 import com.erkang.common.Result;
+import com.erkang.domain.dto.CreateMedicalRecordRequest;
 import com.erkang.domain.entity.MedicalAttachment;
 import com.erkang.domain.entity.MedicalRecord;
 import com.erkang.security.RequireRole;
@@ -23,14 +24,13 @@ public class MedicalRecordController {
     private final MedicalRecordService recordService;
 
     /**
-     * 创建病历
+     * 创建或更新病历
      */
     @PostMapping
     @RequireRole({"DOCTOR_PRIMARY", "DOCTOR_EXPERT"})
-    public Result<MedicalRecord> create(@RequestParam Long consultationId,
-                                        @RequestParam Long patientId) {
+    public Result<MedicalRecord> createOrUpdate(@RequestBody CreateMedicalRecordRequest request) {
         Long doctorId = UserContext.getUserId();
-        MedicalRecord record = recordService.createRecord(consultationId, patientId, doctorId);
+        MedicalRecord record = recordService.createOrUpdateRecord(request, doctorId);
         return Result.success(record);
     }
 

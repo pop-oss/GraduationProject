@@ -37,17 +37,17 @@ class ConsultationControllerTest {
     void getConsultation_shouldReturnConsultationDetails(
             @ForAll @LongRange(min = 1, max = 10000) Long consultationId) {
         
-        Consultation mockConsultation = new Consultation();
-        mockConsultation.setId(consultationId);
-        mockConsultation.setStatus(ConsultationStatus.WAITING.getCode());
+        java.util.Map<String, Object> mockDetail = new java.util.HashMap<>();
+        mockDetail.put("id", consultationId);
+        mockDetail.put("status", ConsultationStatus.WAITING.getCode());
         
-        when(consultationService.getById(consultationId)).thenReturn(mockConsultation);
+        when(consultationService.getDetailById(consultationId)).thenReturn(mockDetail);
         
         var result = consultationController.getConsultation(consultationId);
         
         assertThat(result).isNotNull();
         assertThat(result.getData()).isNotNull();
-        assertThat(result.getData().getId()).isEqualTo(consultationId);
+        assertThat(result.getData().get("id")).isEqualTo(consultationId);
     }
 
     /**

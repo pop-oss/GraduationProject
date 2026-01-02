@@ -70,9 +70,7 @@ public class MDTService {
         if (mdtCase.getTitle() == null || mdtCase.getTitle().trim().isEmpty()) {
             throw new BusinessException(ErrorCode.PARAM_ERROR, "会诊主题为必填项");
         }
-        if (mdtCase.getClinicalSummary() == null || mdtCase.getClinicalSummary().trim().isEmpty()) {
-            throw new BusinessException(ErrorCode.PARAM_ERROR, "病历摘要为必填项");
-        }
+        // clinicalSummary 可选
     }
 
     /**

@@ -33,6 +33,7 @@ public class PrescriptionController {
 
     /**
      * 获取当前用户的处方列表（患者端）
+     * 患者只能看到已审核通过的处方
      */
     @Operation(summary = "获取处方列表")
     @GetMapping
@@ -47,8 +48,12 @@ public class PrescriptionController {
         LambdaQueryWrapper<Prescription> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Prescription::getPatientId, patientId);
         
+        // 患者端默认只显示已审核通过的处方
         if (status != null && !status.isEmpty()) {
             wrapper.eq(Prescription::getStatus, status);
+        } else {
+            // 默认只显示已通过的处方
+            wrapper.eq(Prescription::getStatus, "APPROVED");
         }
         
         wrapper.orderByDesc(Prescription::getCreatedAt);
@@ -67,10 +72,9 @@ public class PrescriptionController {
     @Operation(summary = "创建处方")
     @PostMapping
     @RequireRole({"DOCTOR_PRIMARY", "DOCTOR_EXPERT"})
-    public Result<Prescription> create(@RequestParam Long consultationId,
-                                       @RequestParam Long patientId) {
+    public Result<Prescription> create(@RequestBody com.erkang.domain.dto.CreatePrescriptionRequest request) {
         Long doctorId = UserContext.getUserId();
-        Prescription prescription = prescriptionService.createPrescription(consultationId, patientId, doctorId);
+        Prescription prescription = prescriptionService.createPrescriptionWithItems(request, doctorId);
         return Result.success(prescription);
     }
 
