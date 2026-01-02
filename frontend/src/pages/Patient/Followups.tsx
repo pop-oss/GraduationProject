@@ -15,8 +15,30 @@ import { formatDateTime } from '@/utils/date';
 import type { FollowupPlan, FollowupPlanDetail, FollowupStatus, FollowupAnswer } from '@/types';
 import type { ColumnsType } from 'antd/es/table';
 
+// 后端返回的随访计划类型
+interface BackendFollowupPlan {
+  id: number;
+  consultationId?: number;
+  patientId: number;
+  doctorId: number;
+  planNo: string;
+  diagnosis?: string;
+  followupType?: string;
+  intervalDays?: number;
+  totalTimes?: number;
+  completedTimes?: number;
+  nextFollowupDate?: string;
+  questionList?: string; // JSON字符串
+  redFlags?: string;
+  status: string; // ACTIVE/COMPLETED/CANCELED
+  createdAt: string;
+  updatedAt?: string;
+}
+
+// 状态映射：后端状态 -> 前端显示
 const statusConfig: Record<string, { color: string; text: string }> = {
   PENDING: { color: 'orange', text: '待填写' },
+  ACTIVE: { color: 'processing', text: '进行中' },
   COMPLETED: { color: 'success', text: '已完成' },
   EXPIRED: { color: 'default', text: '已过期' },
   CANCELED: { color: 'error', text: '已取消' },
@@ -43,17 +65,17 @@ const FollowupsPage = () => {
 const FollowupListView = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<FollowupPlan[]>([]);
+  const [data, setData] = useState<BackendFollowupPlan[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [status, setStatus] = useState<FollowupStatus | undefined>();
+  const [status, setStatus] = useState<string | undefined>();
 
   const loadData = async () => {
     setLoading(true);
     try {
-      const result = await followupService.getList({ page, pageSize, status });
-      setData(result.list);
+      const result = await followupService.getList({ page, pageSize, status: status as FollowupStatus });
+      setData(result.list as unknown as BackendFollowupPlan[]);
       setTotal(result.total);
     } catch (err) {
       message.error((err as Error).message || '加载失败');
@@ -66,7 +88,17 @@ const FollowupListView = () => {
     loadData();
   }, [page, pageSize, status]);
 
-  const columns: ColumnsType<FollowupPlan> = [
+  // 解析问题列表
+  const parseQuestions = (questionList?: string) => {
+    if (!questionList) return [];
+    try {
+      return JSON.parse(questionList);
+    } catch {
+      return [];
+    }
+  };
+
+  const columns: ColumnsType<BackendFollowupPlan> = [
     {
       title: '随访编号',
       dataIndex: 'id',
@@ -74,30 +106,30 @@ const FollowupListView = () => {
     },
     {
       title: '标题',
-      dataIndex: 'title',
-      key: 'title',
-      render: (text) => text || '随访问卷',
+      dataIndex: 'diagnosis',
+      key: 'diagnosis',
+      render: (text, record) => text || `随访计划 #${record.planNo?.slice(-8) || record.id}`,
     },
     {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
-      render: (status: FollowupStatus) => {
+      render: (status: string) => {
         const config = statusConfig[status] || { color: 'default', text: status };
         return <Tag color={config.color}>{config.text}</Tag>;
       },
     },
     {
       title: '问题数量',
-      dataIndex: 'questions',
+      dataIndex: 'questionList',
       key: 'questionCount',
-      render: (questions: unknown[]) => `${questions?.length || 0} 题`,
+      render: (questionList: string) => `${parseQuestions(questionList).length} 题`,
     },
     {
       title: '计划时间',
-      dataIndex: 'scheduledAt',
-      key: 'scheduledAt',
-      render: (text) => formatDateTime(text),
+      dataIndex: 'nextFollowupDate',
+      key: 'nextFollowupDate',
+      render: (text, record) => text || formatDateTime(record.createdAt),
     },
     {
       title: '操作',
@@ -105,7 +137,7 @@ const FollowupListView = () => {
       render: (_, record) => (
         <Space>
           <Button type="link" onClick={() => navigate(`/patient/followups/${record.id}`)}>
-            {record.status === 'PENDING' ? '填写问卷' : '查看详情'}
+            {record.status === 'ACTIVE' ? '填写问卷' : '查看详情'}
           </Button>
         </Space>
       ),
@@ -130,9 +162,9 @@ const FollowupListView = () => {
               value={status}
               onChange={setStatus}
               options={[
-                { value: 'PENDING', label: '待填写' },
+                { value: 'ACTIVE', label: '进行中' },
                 { value: 'COMPLETED', label: '已完成' },
-                { value: 'EXPIRED', label: '已过期' },
+                { value: 'CANCELED', label: '已取消' },
               ]}
             />
           </Space>
@@ -166,7 +198,17 @@ const FollowupDetailView = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [detail, setDetail] = useState<FollowupPlanDetail | null>(null);
+  const [detail, setDetail] = useState<BackendFollowupPlan | null>(null);
+
+  // 解析问题列表
+  const parseQuestions = (questionList?: string) => {
+    if (!questionList) return [];
+    try {
+      return JSON.parse(questionList);
+    } catch {
+      return [];
+    }
+  };
 
   useEffect(() => {
     const loadDetail = async () => {
@@ -174,7 +216,7 @@ const FollowupDetailView = ({ id }: { id: string }) => {
       setError(null);
       try {
         const data = await followupService.getDetail(id);
-        setDetail(data);
+        setDetail(data as unknown as BackendFollowupPlan);
       } catch (err) {
         setError((err as Error).message || '加载失败');
       } finally {
@@ -219,12 +261,14 @@ const FollowupDetailView = ({ id }: { id: string }) => {
   }
 
   const statusInfo = statusConfig[detail.status] || { color: 'default', text: detail.status };
-  const isReadonly = detail.status !== 'PENDING';
+  const isReadonly = detail.status !== 'ACTIVE';
+  const questions = parseQuestions(detail.questionList);
+  const title = detail.diagnosis || `随访计划 #${detail.planNo?.slice(-8) || detail.id}`;
 
   return (
     <div>
       <PageHeader
-        title={detail.title || `随访问卷 #${detail.id}`}
+        title={title}
         breadcrumbs={[
           { title: '首页', href: '/patient' },
           { title: '随访计划', href: '/patient/followups' },
@@ -234,20 +278,28 @@ const FollowupDetailView = ({ id }: { id: string }) => {
         extra={<Tag color={statusInfo.color}>{statusInfo.text}</Tag>}
       />
 
-      {detail.description && (
-        <Card style={{ marginBottom: 24 }}>
-          <p style={{ margin: 0, color: '#666' }}>{detail.description}</p>
-        </Card>
-      )}
+      <Card style={{ marginBottom: 24 }}>
+        <p style={{ margin: 0, color: '#666' }}>
+          随访类型: {detail.followupType === 'CHRONIC' ? '慢病随访' : '常规随访'} | 
+          间隔天数: {detail.intervalDays || '-'} 天 | 
+          已完成: {detail.completedTimes || 0}/{detail.totalTimes || '-'} 次
+        </p>
+      </Card>
 
       <Card title="问卷内容">
-        <FollowupQuestionnaire
-          questions={detail.questions}
-          initialAnswers={detail.answers}
-          onSubmit={handleSubmit}
-          readonly={isReadonly}
-          loading={submitting}
-        />
+        {questions.length > 0 ? (
+          <FollowupQuestionnaire
+            questions={questions}
+            initialAnswers={[]}
+            onSubmit={handleSubmit}
+            readonly={isReadonly}
+            loading={submitting}
+          />
+        ) : (
+          <div style={{ textAlign: 'center', padding: 40, color: '#999' }}>
+            暂无问卷内容
+          </div>
+        )}
       </Card>
     </div>
   );

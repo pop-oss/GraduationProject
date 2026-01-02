@@ -27,21 +27,27 @@ const DoctorWorkbench = () => {
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState({ waiting: 0, inProgress: 0, finished: 0 })
   const [waitingList, setWaitingList] = useState<ConsultationDetail[]>([])
+  const [inProgressList, setInProgressList] = useState<ConsultationDetail[]>([])
+  const [activeTab, setActiveTab] = useState<'waiting' | 'inProgress'>('waiting')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState(0)
+  const [inProgressTotal, setInProgressTotal] = useState(0)
   const [accepting, setAccepting] = useState<string | number | null>(null)
 
   const loadData = async () => {
     setLoading(true)
     try {
-      const [statsData, listData] = await Promise.all([
+      const [statsData, waitingData, inProgressData] = await Promise.all([
         consultationService.getTodayStats(),
         consultationService.getWaitingList({ page, pageSize }),
+        consultationService.getInProgressList({ page, pageSize }),
       ])
       setStats(statsData)
-      setWaitingList(listData.list)
-      setTotal(listData.total)
+      setWaitingList(waitingData.list)
+      setTotal(waitingData.total)
+      setInProgressList(inProgressData.list)
+      setInProgressTotal(inProgressData.total)
     } catch (err) {
       message.error((err as Error).message || '加载失败')
     } finally {
@@ -69,14 +75,21 @@ const DoctorWorkbench = () => {
   const columns: ColumnsType<ConsultationDetail> = [
     {
       title: '问诊编号',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: 'consultationNo',
+      key: 'consultationNo',
+      render: (text, record: any) => text || record.id,
     },
     {
-      title: '患者',
-      dataIndex: ['patient', 'name'],
+      title: '患者姓名',
+      dataIndex: 'patientName',
       key: 'patientName',
-      render: (_, record) => record.patient?.name || '-',
+      render: (text, record: any) => text || record.patient?.name || '-',
+    },
+    {
+      title: '患者电话',
+      dataIndex: 'patientPhone',
+      key: 'patientPhone',
+      render: (text, record: any) => text || record.patient?.phone || '-',
     },
     {
       title: '症状描述',
@@ -88,7 +101,7 @@ const DoctorWorkbench = () => {
       title: '预约时间',
       dataIndex: 'scheduledAt',
       key: 'scheduledAt',
-      render: (text) => formatDateTime(text),
+      render: (text, record: any) => formatDateTime(text || record.createdAt) || '-',
     },
     {
       title: '状态',
@@ -102,7 +115,7 @@ const DoctorWorkbench = () => {
       render: (_, record) => (
         <Space>
           <Button type="link" onClick={() => navigate(`/doctor/consultation/${record.id}`)}>
-            查看
+            {record.status === 'IN_PROGRESS' ? '进入问诊室' : '查看'}
           </Button>
           {record.status === 'WAITING' && (
             <Button 
@@ -162,7 +175,11 @@ const DoctorWorkbench = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card>
+          <Card 
+            hoverable 
+            onClick={() => setActiveTab('inProgress')}
+            style={{ cursor: 'pointer', borderColor: activeTab === 'inProgress' ? '#1890ff' : undefined }}
+          >
             <Statistic 
               title="进行中" 
               value={stats.inProgress} 
@@ -173,20 +190,38 @@ const DoctorWorkbench = () => {
         </Col>
       </Row>
 
-      <Card title="待接诊列表">
+      <Card 
+        title={activeTab === 'waiting' ? '待接诊列表' : '进行中列表'}
+        extra={
+          <Space>
+            <Button 
+              type={activeTab === 'waiting' ? 'primary' : 'default'}
+              onClick={() => setActiveTab('waiting')}
+            >
+              待接诊 ({stats.waiting})
+            </Button>
+            <Button 
+              type={activeTab === 'inProgress' ? 'primary' : 'default'}
+              onClick={() => setActiveTab('inProgress')}
+            >
+              进行中 ({stats.inProgress})
+            </Button>
+          </Space>
+        }
+      >
         <DataTable
           columns={columns}
-          dataSource={waitingList}
+          dataSource={activeTab === 'waiting' ? waitingList : inProgressList}
           rowKey="id"
           loading={loading}
           page={page}
           pageSize={pageSize}
-          total={total}
+          total={activeTab === 'waiting' ? total : inProgressTotal}
           onPageChange={(p, ps) => {
             setPage(p)
             setPageSize(ps)
           }}
-          emptyText="暂无待接诊患者"
+          emptyText={activeTab === 'waiting' ? '暂无待接诊患者' : '暂无进行中的问诊'}
         />
       </Card>
     </div>

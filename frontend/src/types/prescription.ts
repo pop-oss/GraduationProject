@@ -9,14 +9,18 @@ export type PrescriptionStatus = 'DRAFT' | 'PENDING_REVIEW' | 'APPROVED' | 'REJE
 
 // 处方药品项
 export interface PrescriptionItem {
+  id?: number;
+  prescriptionId?: number;
   drugName: string;
-  spec?: string;
+  drugSpec?: string;
   dosage?: string;
   frequency?: string;
   duration?: string;
   quantity?: number;
-  usage?: string;
-  remark?: string;
+  unit?: string;
+  notes?: string;
+  sortOrder?: number;
+  createdAt?: string;
 }
 
 // 处方

@@ -109,9 +109,9 @@ export const VideoRoom: React.FC<VideoRoomProps> = ({ consultationId, onLeave })
         <div style={{ 
           position: 'absolute',
           right: 32,
-          bottom: 32,
-          width: 200,
-          height: 150,
+          top: 16,
+          width: 160,
+          height: 120,
           background: '#2a2a2a',
           borderRadius: 8,
           overflow: 'hidden',
@@ -123,7 +123,7 @@ export const VideoRoom: React.FC<VideoRoomProps> = ({ consultationId, onLeave })
               autoPlay
               playsInline
               muted
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           ) : (
             <div style={{ 

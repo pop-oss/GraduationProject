@@ -10,7 +10,7 @@ export type RiskLevel = 'LOW' | 'MEDIUM' | 'HIGH'
 export interface PrescriptionItem {
   id: number
   drugName: string
-  specification: string
+  drugSpec: string
   dosage: string
   frequency: string
   duration: string

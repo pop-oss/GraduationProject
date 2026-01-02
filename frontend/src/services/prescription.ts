@@ -44,12 +44,41 @@ export const prescriptionService = {
   },
 
   /**
-   * 获取处方详情
+   * 获取处方详情（包含药品明细）
    * _Requirements: 5.2_
    */
   getDetail: async (id: Id): Promise<PrescriptionDetail> => {
-    const response = await get<PrescriptionDetail>(`/prescriptions/${id}`);
-    return response.data;
+    // 同时获取处方基本信息和药品明细
+    const [prescriptionRes, itemsRes] = await Promise.all([
+      get<any>(`/prescriptions/${id}`),
+      get<any[]>(`/prescriptions/${id}/items`),
+    ]);
+    
+    const prescription = prescriptionRes.data;
+    const items = itemsRes.data || [];
+    
+    console.log('[PrescriptionService] getDetail - prescription:', prescription);
+    console.log('[PrescriptionService] getDetail - items:', items);
+    
+    // 处理 diagnosis 字段，确保是数组格式
+    let diagnosis: string[] = [];
+    if (prescription.diagnosis) {
+      if (Array.isArray(prescription.diagnosis)) {
+        diagnosis = prescription.diagnosis;
+      } else if (typeof prescription.diagnosis === 'string') {
+        diagnosis = [prescription.diagnosis];
+      }
+    }
+    
+    const result = {
+      ...prescription,
+      diagnosis,
+      items,
+    };
+    
+    console.log('[PrescriptionService] getDetail - result:', result);
+    
+    return result;
   },
 
   /**

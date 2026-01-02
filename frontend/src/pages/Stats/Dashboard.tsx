@@ -183,9 +183,9 @@ const StatsDashboard = () => {
         {/* 问诊趋势 */}
         <Col span={16}>
           <Card title="问诊趋势" loading={loading}>
-            <div style={{ height: 300 }}>
+            <div style={{ height: 300, overflow: 'hidden' }}>
               {trend.length > 0 ? (
-                <div style={{ display: 'flex', alignItems: 'flex-end', height: '100%', gap: 4 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-end', height: 'calc(100% - 40px)', gap: 4, paddingBottom: 40 }}>
                   {trend.map((item, index) => (
                     <div 
                       key={index} 
@@ -196,18 +196,28 @@ const StatsDashboard = () => {
                         alignItems: 'center',
                         height: '100%',
                         justifyContent: 'flex-end',
+                        minWidth: 0,
                       }}
                     >
                       <div 
                         style={{ 
                           width: '80%', 
+                          maxWidth: 30,
                           backgroundColor: '#1890ff',
-                          height: `${Math.max((item.count / Math.max(...trend.map(t => t.count))) * 250, 4)}px`,
+                          height: `${Math.max((item.count / Math.max(...trend.map(t => t.count), 1)) * 200, 4)}px`,
                           borderRadius: 2,
                         }} 
                         title={`${item.date}: ${item.count}次`}
                       />
-                      <div style={{ fontSize: 10, color: '#999', marginTop: 4, transform: 'rotate(-45deg)' }}>
+                      <div style={{ 
+                        fontSize: 10, 
+                        color: '#999', 
+                        marginTop: 4, 
+                        transform: 'rotate(-45deg)',
+                        whiteSpace: 'nowrap',
+                        position: 'absolute',
+                        bottom: 5,
+                      }}>
                         {dayjs(item.date).format('MM-DD')}
                       </div>
                     </div>

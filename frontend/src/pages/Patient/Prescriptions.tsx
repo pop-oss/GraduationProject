@@ -76,7 +76,11 @@ const PrescriptionListView = () => {
       title: '诊断',
       dataIndex: 'diagnosis',
       key: 'diagnosis',
-      render: (diagnosis: string[]) => diagnosis?.join('；') || '-',
+      render: (diagnosis: string | string[]) => {
+        if (!diagnosis) return '-';
+        if (Array.isArray(diagnosis)) return diagnosis.join('；');
+        return diagnosis;
+      },
       ellipsis: true,
     },
     {
@@ -87,12 +91,6 @@ const PrescriptionListView = () => {
         const config = statusConfig[status] || { color: 'default', text: status };
         return <Tag color={config.color}>{config.text}</Tag>;
       },
-    },
-    {
-      title: '药品数量',
-      dataIndex: 'items',
-      key: 'itemCount',
-      render: (items: unknown[]) => `${items?.length || 0} 种`,
     },
     {
       title: '开具时间',
@@ -173,6 +171,8 @@ const PrescriptionDetailView = ({ id }: { id: string }) => {
       setError(null);
       try {
         const data = await prescriptionService.getDetail(id);
+        console.log('[PrescriptionDetailView] loaded data:', data);
+        console.log('[PrescriptionDetailView] items:', data.items);
         setDetail(data);
       } catch (err) {
         setError((err as Error).message || '加载失败');

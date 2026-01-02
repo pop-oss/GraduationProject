@@ -94,6 +94,25 @@ export const consultationService = {
   },
 
   /**
+   * 获取进行中列表（医生端）
+   * _Requirements: 6.2_
+   */
+  getInProgressList: async (params: {
+    page: number;
+    pageSize: number;
+  }): Promise<PageResult<ConsultationDetail>> => {
+    const response = await get<any>('/consultations/in-progress', params);
+    // 适配后端返回格式 { records, total, pages, current }
+    const data = response.data;
+    return {
+      list: data.records || [],
+      total: data.total || 0,
+      page: data.current || 1,
+      pageSize: params.pageSize || 10,
+    };
+  },
+
+  /**
    * 获取今日统计（医生端）
    * _Requirements: 6.1_
    */

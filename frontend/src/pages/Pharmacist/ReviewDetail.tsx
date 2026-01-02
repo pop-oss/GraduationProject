@@ -84,7 +84,7 @@ const ReviewDetail = () => {
 
   const columns: ColumnsType<PrescriptionItem> = [
     { title: '药品名称', dataIndex: 'drugName', key: 'drugName' },
-    { title: '规格', dataIndex: 'specification', key: 'specification' },
+    { title: '规格', dataIndex: 'drugSpec', key: 'drugSpec' },
     { title: '单次剂量', dataIndex: 'dosage', key: 'dosage' },
     { title: '用药频次', dataIndex: 'frequency', key: 'frequency' },
     { title: '疗程', dataIndex: 'duration', key: 'duration' },

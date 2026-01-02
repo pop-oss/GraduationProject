@@ -27,6 +27,7 @@ const DoctorMedicalRecord = lazy(() => import('@/pages/Doctor/MedicalRecord'))
 const DoctorPrescription = lazy(() => import('@/pages/Doctor/Prescription'))
 const DoctorReferral = lazy(() => import('@/pages/Doctor/Referral'))
 const DoctorMDT = lazy(() => import('@/pages/Doctor/MDT'))
+const DoctorFollowup = lazy(() => import('@/pages/Doctor/Followup'))
 
 // 懒加载组件 - 药师端
 const PharmacistReviewList = lazy(() => import('@/pages/Pharmacist/ReviewList'))
@@ -73,7 +74,9 @@ const routes: RouteObject[] = [
       { path: 'consultation/:id', element: <PatientConsultation /> },
       { path: 'consultation/:id/room', element: <PatientConsultationRoom /> },
       { path: 'prescriptions', element: <PatientPrescriptions /> },
+      { path: 'prescriptions/:id', element: <PatientPrescriptions /> },
       { path: 'followups', element: <PatientFollowups /> },
+      { path: 'followups/:id', element: <PatientFollowups /> },
       { path: 'ai-chat', element: <PatientAIChat /> },
     ],
   },
@@ -95,6 +98,7 @@ const routes: RouteObject[] = [
       { path: 'prescription/:consultationId', element: <DoctorPrescription /> },
       { path: 'referral', element: <DoctorReferral /> },
       { path: 'mdt', element: <DoctorMDT /> },
+      { path: 'followups', element: <DoctorFollowup /> },
     ],
   },
 

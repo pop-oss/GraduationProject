@@ -37,7 +37,8 @@ export const PatientBriefCard: React.FC<PatientBriefCardProps> = ({
   style,
   compact = false,
 }) => {
-  const genderText = patient.gender === 'MALE' ? '男' : patient.gender === 'FEMALE' ? '女' : '-';
+  const genderText = patient.gender === 'MALE' || patient.gender === '男' ? '男' 
+    : patient.gender === 'FEMALE' || patient.gender === '女' ? '女' : '-';
 
   // 紧凑模式：只显示姓名和基本信息
   if (compact) {

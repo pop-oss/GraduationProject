@@ -97,7 +97,7 @@ const ConsultationListView = () => {
             查看
           </Button>
           {record.status === 'IN_PROGRESS' && (
-            <Button type="primary" onClick={() => navigate(`/patient/room/${record.id}`)}>
+            <Button type="primary" onClick={() => navigate(`/patient/consultation/${record.id}/room`)}>
               进入房间
             </Button>
           )}
@@ -186,11 +186,11 @@ const ConsultationDetailView = ({ id }: { id: string }) => {
   }, [id]);
 
   const handleBack = () => {
-    navigate('/patient/consultation');
+    navigate('/patient/consultations');
   };
 
   const handleEnterRoom = () => {
-    navigate(`/patient/room/${detail?.id}`);
+    navigate(`/patient/consultation/${detail?.id}/room`);
   };
 
   if (loading) {
@@ -211,7 +211,7 @@ const ConsultationDetailView = ({ id }: { id: string }) => {
         title={`问诊详情 #${detail.id}`}
         breadcrumbs={[
           { title: '首页', href: '/patient' },
-          { title: '问诊记录', href: '/patient/consultation' },
+          { title: '问诊记录', href: '/patient/consultations' },
           { title: '问诊详情' },
         ]}
         onBack={handleBack}

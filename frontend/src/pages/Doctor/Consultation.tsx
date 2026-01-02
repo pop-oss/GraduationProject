@@ -139,7 +139,9 @@ const DoctorConsultation = () => {
       key: 'video',
       label: '视频问诊',
       children: (
-        <VideoRoom consultationId={Number(id)} />
+        <div style={{ height: 400 }}>
+          <VideoRoom consultationId={Number(id)} />
+        </div>
       )
     },
     {

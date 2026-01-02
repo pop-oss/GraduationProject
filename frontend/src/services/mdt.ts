@@ -84,8 +84,15 @@ export const mdtService = {
    * 获取 MDT 列表
    */
   getList: async (params: MDTQuery): Promise<PageResult<MDT>> => {
-    const response = await get<PageResult<MDT>>('/mdt', params);
-    return response.data;
+    const response = await get<any>('/mdt', params);
+    // 适配后端返回格式
+    const data = response.data;
+    return {
+      list: data.list || [],
+      total: data.total || 0,
+      page: data.page || 1,
+      pageSize: data.pageSize || 10,
+    };
   },
 
   /**

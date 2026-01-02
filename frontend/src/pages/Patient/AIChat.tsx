@@ -1,13 +1,23 @@
 import { useState, useRef, useEffect } from 'react'
-import { Card, Input, Button, List, Avatar, Spin, message, Alert } from 'antd'
-import { SendOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons'
+import { Card, Input, Button, List, Avatar, Spin, message, Alert, Drawer, Empty, Typography } from 'antd'
+import { SendOutlined, RobotOutlined, UserOutlined, HistoryOutlined, PlusOutlined, MessageOutlined } from '@ant-design/icons'
 import api from '@/services/api'
+import dayjs from 'dayjs'
 
 interface Message {
   id: number
   role: 'user' | 'assistant'
   content: string
   createdAt: string
+}
+
+interface Session {
+  id: number
+  sessionType: string
+  status: string
+  title?: string
+  createdAt: string
+  updatedAt: string
 }
 
 /**
@@ -19,28 +29,71 @@ const AIChat = () => {
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [sessionId, setSessionId] = useState<number | null>(null)
+  const [sessions, setSessions] = useState<Session[]>([])
+  const [historyVisible, setHistoryVisible] = useState(false)
+  const [loadingHistory, setLoadingHistory] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     initSession()
+    loadSessions()
   }, [])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  // 加载历史会话列表
+  const loadSessions = async () => {
+    try {
+      const res = await api.get('/ai/session/my')
+      setSessions(res.data.data || [])
+    } catch {
+      console.error('加载历史会话失败')
+    }
+  }
+
+  // 初始化新会话
   const initSession = async () => {
     try {
-      const res = await api.post('/ai/sessions')
+      const res = await api.post('/ai/session')
       setSessionId(res.data.data?.id)
+      setMessages([])
     } catch {
-      // 使用临时 session
       setSessionId(Date.now())
     }
   }
 
+  // 创建新会话
+  const createNewSession = async () => {
+    await initSession()
+    await loadSessions()
+    message.success('已创建新会话')
+  }
+
+  // 加载历史会话消息
+  const loadSessionMessages = async (sid: number) => {
+    setLoadingHistory(true)
+    try {
+      const res = await api.get(`/ai/session/${sid}/messages`)
+      const msgs = (res.data.data || []).map((m: any) => ({
+        id: m.id,
+        role: m.role === 'USER' ? 'user' : 'assistant',
+        content: m.content,
+        createdAt: m.createdAt
+      }))
+      setMessages(msgs)
+      setSessionId(sid)
+      setHistoryVisible(false)
+    } catch {
+      message.error('加载历史消息失败')
+    } finally {
+      setLoadingHistory(false)
+    }
+  }
+
   const handleSend = async () => {
-    if (!inputValue.trim() || loading) return
+    if (!inputValue.trim() || loading || !sessionId) return
 
     const userMessage: Message = {
       id: Date.now(),
@@ -50,26 +103,24 @@ const AIChat = () => {
     }
     
     setMessages(prev => [...prev, userMessage])
+    const question = inputValue
     setInputValue('')
     setLoading(true)
 
     try {
-      const res = await api.post('/ai/chat', {
-        sessionId,
-        message: inputValue
-      })
+      const res = await api.post(`/ai/session/${sessionId}/chat`, { question })
       
       const assistantMessage: Message = {
         id: Date.now() + 1,
         role: 'assistant',
-        content: res.data.data?.reply || '抱歉，我暂时无法回答这个问题。',
+        content: res.data.data?.answer || '抱歉，我暂时无法回答这个问题。',
         createdAt: new Date().toISOString()
       }
       
       setMessages(prev => [...prev, assistantMessage])
+      loadSessions() // 刷新会话列表
     } catch {
       message.error('发送失败，请重试')
-      // 移除用户消息
       setMessages(prev => prev.filter(m => m.id !== userMessage.id))
     } finally {
       setLoading(false)
@@ -88,8 +139,18 @@ const AIChat = () => {
       
       <Card 
         title={<><RobotOutlined /> AI 健康助手</>}
+        extra={
+          <div>
+            <Button icon={<PlusOutlined />} onClick={createNewSession} style={{ marginRight: 8 }}>
+              新会话
+            </Button>
+            <Button icon={<HistoryOutlined />} onClick={() => setHistoryVisible(true)}>
+              历史记录
+            </Button>
+          </div>
+        }
         style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-        bodyStyle={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}
+        styles={{ body: { flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' } }}
       >
         <div style={{ flex: 1, overflow: 'auto', marginBottom: 16 }}>
           {messages.length === 0 ? (
@@ -155,6 +216,47 @@ const AIChat = () => {
           </Button>
         </Input.Group>
       </Card>
+
+      {/* 历史会话抽屉 */}
+      <Drawer
+        title="历史会话"
+        placement="right"
+        onClose={() => setHistoryVisible(false)}
+        open={historyVisible}
+        width={360}
+      >
+        <Spin spinning={loadingHistory}>
+          {sessions.length === 0 ? (
+            <Empty description="暂无历史会话" />
+          ) : (
+            <List
+              dataSource={sessions}
+              renderItem={(session) => (
+                <List.Item
+                  style={{ 
+                    cursor: 'pointer',
+                    background: session.id === sessionId ? '#e6f7ff' : 'transparent',
+                    borderRadius: 8,
+                    marginBottom: 8,
+                    padding: '12px'
+                  }}
+                  onClick={() => loadSessionMessages(session.id)}
+                >
+                  <List.Item.Meta
+                    avatar={<Avatar icon={<MessageOutlined />} style={{ background: '#1890ff' }} />}
+                    title={session.title || '新会话'}
+                    description={
+                      <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+                        {dayjs(session.updatedAt || session.createdAt).format('YYYY-MM-DD HH:mm')}
+                      </Typography.Text>
+                    }
+                  />
+                </List.Item>
+              )}
+            />
+          )}
+        </Spin>
+      </Drawer>
     </div>
   )
 }

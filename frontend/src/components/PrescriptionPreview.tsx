@@ -41,6 +41,9 @@ export const PrescriptionPreview: React.FC<PrescriptionPreviewProps> = ({
   extra,
   style,
 }) => {
+  console.log('[PrescriptionPreview] prescription:', prescription);
+  console.log('[PrescriptionPreview] items:', prescription.items);
+  
   const statusInfo = statusConfig[prescription.status] || { color: 'default', text: prescription.status };
 
   const columns = [
@@ -51,14 +54,14 @@ export const PrescriptionPreview: React.FC<PrescriptionPreviewProps> = ({
     },
     {
       title: '规格',
-      dataIndex: 'spec',
-      key: 'spec',
+      dataIndex: 'drugSpec',
+      key: 'drugSpec',
       render: (text: string) => text || '-',
     },
     {
       title: '用法用量',
-      dataIndex: 'usage',
-      key: 'usage',
+      dataIndex: 'dosage',
+      key: 'dosage',
       render: (text: string) => text || '-',
     },
     {
@@ -69,8 +72,8 @@ export const PrescriptionPreview: React.FC<PrescriptionPreviewProps> = ({
     },
     {
       title: '备注',
-      dataIndex: 'remark',
-      key: 'remark',
+      dataIndex: 'notes',
+      key: 'notes',
       render: (text: string) => text || '-',
     },
   ];

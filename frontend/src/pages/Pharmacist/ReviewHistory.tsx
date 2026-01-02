@@ -10,18 +10,6 @@ import { formatDateTime } from '@/utils/date'
 
 const { RangePicker } = DatePicker
 
-const statusColors: Record<ReviewStatus, string> = {
-  PENDING_REVIEW: 'processing',
-  APPROVED: 'success',
-  REJECTED: 'error',
-}
-
-const statusLabels: Record<ReviewStatus, string> = {
-  PENDING_REVIEW: '待审核',
-  APPROVED: '已通过',
-  REJECTED: '已驳回',
-}
-
 const riskColors: Record<RiskLevel, string> = {
   LOW: 'green',
   MEDIUM: 'orange',
@@ -50,38 +38,48 @@ const ReviewHistory = () => {
     dateRange?: [Dayjs, Dayjs] | null
   }>({})
 
-  useEffect(() => {
-    fetchHistory()
-  }, [page, pageSize])
+  // 用于触发数据刷新
+  const [fetchTrigger, setFetchTrigger] = useState(0)
+  // 用于存储实际请求时使用的筛选条件
+  const [appliedFilters, setAppliedFilters] = useState<{
+    status?: ReviewStatus
+    dateRange?: [Dayjs, Dayjs] | null
+  }>({})
 
-  const fetchHistory = async () => {
-    setLoading(true)
-    try {
-      const query: Record<string, unknown> = { page, pageSize }
-      if (filters.status) query.status = filters.status
-      if (filters.dateRange) {
-        query.startDate = filters.dateRange[0].format('YYYY-MM-DD')
-        query.endDate = filters.dateRange[1].format('YYYY-MM-DD')
+  useEffect(() => {
+    const fetchHistory = async () => {
+      setLoading(true)
+      try {
+        const query: Record<string, unknown> = { page, pageSize }
+        if (appliedFilters.status) query.status = appliedFilters.status
+        if (appliedFilters.dateRange) {
+          query.startDate = appliedFilters.dateRange[0].format('YYYY-MM-DD')
+          query.endDate = appliedFilters.dateRange[1].format('YYYY-MM-DD')
+        }
+        const result = await reviewService.getHistory(query)
+        setPrescriptions(result.list)
+        setTotal(result.total)
+      } catch {
+        message.error('获取历史记录失败')
+      } finally {
+        setLoading(false)
       }
-      const result = await reviewService.getHistory(query)
-      setPrescriptions(result.list)
-      setTotal(result.total)
-    } catch {
-      message.error('获取历史记录失败')
-    } finally {
-      setLoading(false)
     }
-  }
+    fetchHistory()
+  }, [page, pageSize, fetchTrigger, appliedFilters])
 
   const handleSearch = () => {
+    // 应用当前筛选条件
+    setAppliedFilters({ ...filters })
     setPage(1)
-    fetchHistory()
+    setFetchTrigger(prev => prev + 1)
   }
 
   const handleReset = () => {
     setFilters({})
+    setAppliedFilters({})
     setPage(1)
-    fetchHistory()
+    setFetchTrigger(prev => prev + 1)
   }
 
   const columns: ColumnsType<ReviewPrescription> = [
@@ -107,12 +105,20 @@ const ReviewHistory = () => {
     },
     { 
       title: '审核状态', 
-      dataIndex: 'status', 
-      key: 'status',
+      dataIndex: 'reviewResult', 
+      key: 'reviewResult',
       width: 100,
-      render: (status: ReviewStatus) => (
-        <Tag color={statusColors[status]}>{statusLabels[status] || status}</Tag>
-      )
+      render: (result: string) => {
+        const colors: Record<string, string> = {
+          APPROVED: 'success',
+          REJECTED: 'error',
+        }
+        const labels: Record<string, string> = {
+          APPROVED: '已通过',
+          REJECTED: '已驳回',
+        }
+        return <Tag color={colors[result] || 'default'}>{labels[result] || result}</Tag>
+      }
     },
     {
       title: '操作',
