@@ -48,14 +48,18 @@ httpClient.interceptors.request.use(
 httpClient.interceptors.response.use(
   (response: AxiosResponse<HttpResponse<unknown>>) => {
     const httpConfig = response.config as HttpConfig;
+    
+    // 如果是 blob 响应类型，直接返回（不检查 code）
+    if (httpConfig.responseType === 'blob') {
+      return response;
+    }
+    
     const res = response.data;
     
     // 业务成功
     if (res.code === 0) {
       return response;
     }
-    
-
     
     // 如果不跳过错误处理，显示错误消息
     if (!httpConfig.skipErrorHandler) {

@@ -4,7 +4,7 @@
  */
 import { get, post, put, del } from './http'
 
-export type UserRole = 'PATIENT' | 'DOCTOR' | 'PHARMACIST' | 'ADMIN'
+export type UserRole = 'PATIENT' | 'DOCTOR_PRIMARY' | 'DOCTOR_EXPERT' | 'PHARMACIST' | 'ADMIN'
 export type UserStatus = 'ACTIVE' | 'DISABLED' | 'PENDING'
 
 export interface User {
@@ -81,6 +81,50 @@ export interface SystemStats {
   todayConsultations: number
 }
 
+export interface Role {
+  id: number
+  roleCode: string
+  roleName: string
+  description?: string
+  createdAt: string
+  permissionIds?: number[]
+}
+
+export interface Permission {
+  id: number
+  permCode: string
+  permName: string
+  permType: 'menu' | 'button'
+  parentId: number
+  path?: string
+  icon?: string
+  sortOrder: number
+  children?: Permission[]
+}
+
+/**
+ * 带重试的请求包装器
+ * _Requirements: 3.8_
+ */
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  maxRetries = 2,
+  delay = 1000
+): Promise<T> {
+  let lastError: Error | null = null
+  for (let i = 0; i <= maxRetries; i++) {
+    try {
+      return await fn()
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err))
+      if (i < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, delay * (i + 1)))
+      }
+    }
+  }
+  throw lastError
+}
+
 export const adminService = {
   /** 获取用户列表 */
   async getUserList(query: UserListQuery = {}): Promise<UserListResult> {
@@ -129,9 +173,8 @@ export const adminService = {
   },
 
   /** 重置用户密码 */
-  async resetPassword(id: number | string): Promise<{ tempPassword: string }> {
-    const res = await post<{ tempPassword: string }>(`/admin/users/${id}/reset-password`)
-    return res.data!
+  async resetPassword(id: number | string, newPassword: string): Promise<void> {
+    await post(`/admin/users/${id}/reset-password`, { password: newPassword })
   },
 
   /** 获取科室列表 */
@@ -153,5 +196,34 @@ export const adminService = {
       onlineDoctors: 0,
       todayConsultations: 0,
     }
+  },
+
+  /** 获取角色列表 - 带重试 _Requirements: 1.5, 3.8_ */
+  async getRoles(): Promise<Role[]> {
+    return withRetry(async () => {
+      const res = await get<Role[]>('/admin/roles')
+      return res.data || []
+    })
+  },
+
+  /** 获取角色详情（含权限） - 带重试 _Requirements: 3.8_ */
+  async getRoleDetail(id: number): Promise<Role> {
+    return withRetry(async () => {
+      const res = await get<Role>(`/admin/roles/${id}`)
+      return res.data!
+    })
+  },
+
+  /** 更新角色权限 _Requirements: 4.1, 4.2_ */
+  async updateRolePermissions(roleId: number, permissionIds: number[]): Promise<void> {
+    await put(`/admin/roles/${roleId}/permissions`, { permissionIds })
+  },
+
+  /** 获取权限树 - 带重试 _Requirements: 2.1, 3.8_ */
+  async getPermissionTree(): Promise<Permission[]> {
+    return withRetry(async () => {
+      const res = await get<Permission[]>('/admin/permissions/tree')
+      return res.data || []
+    })
   },
 }

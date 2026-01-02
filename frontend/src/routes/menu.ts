@@ -146,6 +146,12 @@ export const menuConfig: MenuItem[] = [
         roles: [Role.ADMIN],
       },
       {
+        key: 'admin-roles',
+        label: '权限管理',
+        path: '/admin/roles',
+        roles: [Role.ADMIN],
+      },
+      {
         key: 'admin-audit-log',
         label: '审计日志',
         path: '/admin/audit-log',

@@ -142,7 +142,7 @@ const AppLayout: React.FC = () => {
       logout();
       navigate('/login', { replace: true });
     } else if (key === 'profile') {
-      // TODO: 跳转到个人中心
+      navigate('/profile');
     }
   };
 

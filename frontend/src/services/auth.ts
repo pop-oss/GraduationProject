@@ -81,6 +81,20 @@ export const authService = {
     const response = await get<UserInfo>('/auth/me');
     return response.data;
   },
+
+  /**
+   * 更新个人信息
+   */
+  updateProfile: async (data: { realName?: string; phone?: string; email?: string }): Promise<void> => {
+    await post('/auth/profile', data);
+  },
+
+  /**
+   * 修改密码
+   */
+  changePassword: async (oldPassword: string, newPassword: string): Promise<void> => {
+    await post('/auth/change-password', { oldPassword, newPassword });
+  },
 };
 
 export default authService;

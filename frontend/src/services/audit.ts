@@ -11,6 +11,8 @@ export interface AuditLog {
   id: number
   userId: number
   username: string
+  realName?: string
+  phone?: string
   action: AuditAction
   module: AuditModule
   targetId?: string
@@ -52,9 +54,11 @@ export const auditService = {
 
   /** 导出审计日志 */
   async exportLogs(query: Omit<AuditLogQuery, 'page' | 'pageSize'>): Promise<Blob> {
-    const res = await get<Blob>('/audit-logs/export', query, {
+    const { httpClient } = await import('./http')
+    const res = await httpClient.get('/audit-logs/export', {
+      params: query,
       responseType: 'blob',
     })
-    return res.data!
+    return res.data
   },
 }

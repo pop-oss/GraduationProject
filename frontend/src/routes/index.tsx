@@ -37,9 +37,13 @@ const PharmacistReviewHistory = lazy(() => import('@/pages/Pharmacist/ReviewHist
 const AdminDashboard = lazy(() => import('@/pages/Admin/Dashboard'))
 const AdminUserManagement = lazy(() => import('@/pages/Admin/UserManagement'))
 const AdminAuditLog = lazy(() => import('@/pages/Admin/AuditLog'))
+const AdminRolePermission = lazy(() => import('@/pages/Admin/RolePermission'))
 
 // 懒加载组件 - 统计
 const StatsDashboard = lazy(() => import('@/pages/Stats/Dashboard'))
+
+// 懒加载组件 - 通用
+const ProfilePage = lazy(() => import('@/pages/Profile'))
 
 /**
  * 带布局的路由包装组件
@@ -120,6 +124,7 @@ const routes: RouteObject[] = [
     children: [
       { index: true, element: <AdminDashboard /> },
       { path: 'users', element: <AdminUserManagement /> },
+      { path: 'roles', element: <AdminRolePermission /> },
       { path: 'audit-log', element: <AdminAuditLog /> },
     ],
   },
@@ -134,6 +139,19 @@ const routes: RouteObject[] = [
     ),
     children: [
       { index: true, element: <StatsDashboard /> },
+    ],
+  },
+
+  // 个人中心路由（所有登录用户可访问）
+  {
+    path: '/profile',
+    element: (
+      <AuthGuard allowedRoles={[Role.ADMIN, Role.PATIENT, Role.DOCTOR_PRIMARY, Role.DOCTOR_EXPERT, Role.PHARMACIST]}>
+        <LayoutWrapper />
+      </AuthGuard>
+    ),
+    children: [
+      { index: true, element: <ProfilePage /> },
     ],
   },
 

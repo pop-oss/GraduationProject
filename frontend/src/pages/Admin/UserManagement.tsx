@@ -12,16 +12,19 @@ import PageHeader from '@/components/PageHeader'
 import { adminService, type User, type UserRole, type UserStatus, type Department } from '@/services/admin'
 import { formatDateTime } from '@/utils/date'
 
-const roleColors: Record<UserRole, string> = {
+const roleColors: Record<string, string> = {
   PATIENT: 'blue',
   DOCTOR: 'green',
+  DOCTOR_PRIMARY: 'green',
+  DOCTOR_EXPERT: 'purple',
   PHARMACIST: 'orange',
   ADMIN: 'red',
 }
 
-const roleLabels: Record<UserRole, string> = {
+const roleLabels: Record<string, string> = {
   PATIENT: '患者',
-  DOCTOR: '医生',
+  DOCTOR_PRIMARY: '基层医生',
+  DOCTOR_EXPERT: '专家医生',
   PHARMACIST: '药师',
   ADMIN: '管理员',
 }
@@ -54,6 +57,11 @@ const UserManagement = () => {
   const [submitting, setSubmitting] = useState(false)
   const [filters, setFilters] = useState<{ keyword?: string; role?: UserRole; status?: UserStatus }>({})
   const [form] = Form.useForm()
+  // 重置密码相关状态
+  const [resetPasswordVisible, setResetPasswordVisible] = useState(false)
+  const [resetPasswordUserId, setResetPasswordUserId] = useState<number | null>(null)
+  const [resetPasswordSubmitting, setResetPasswordSubmitting] = useState(false)
+  const [resetPasswordForm] = Form.useForm()
 
 
   useEffect(() => {
@@ -153,14 +161,22 @@ const UserManagement = () => {
   }
 
   const handleResetPassword = async (id: number) => {
+    setResetPasswordUserId(id)
+    resetPasswordForm.resetFields()
+    setResetPasswordVisible(true)
+  }
+
+  const handleResetPasswordSubmit = async (values: { password: string }) => {
+    if (!resetPasswordUserId) return
+    setResetPasswordSubmitting(true)
     try {
-      const result = await adminService.resetPassword(id)
-      Modal.success({
-        title: '密码已重置',
-        content: `临时密码: ${result.tempPassword}`,
-      })
+      await adminService.resetPassword(resetPasswordUserId, values.password)
+      message.success('密码重置成功')
+      setResetPasswordVisible(false)
     } catch (err) {
       message.error((err as Error).message || '重置失败')
+    } finally {
+      setResetPasswordSubmitting(false)
     }
   }
 
@@ -173,8 +189,8 @@ const UserManagement = () => {
       title: '角色', 
       dataIndex: 'role', 
       key: 'role',
-      width: 80,
-      render: (role: UserRole) => <Tag color={roleColors[role]}>{roleLabels[role]}</Tag>
+      width: 100,
+      render: (role: string) => <Tag color={roleColors[role] || 'default'}>{roleLabels[role] || role}</Tag>
     },
     { title: '科室', dataIndex: 'departmentName', key: 'departmentName', width: 100 },
     { 
@@ -347,6 +363,51 @@ const UserManagement = () => {
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={submitting} block>
               {editingUser ? '保存' : '创建'}
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      {/* 重置密码弹窗 */}
+      <Modal
+        title="重置密码"
+        open={resetPasswordVisible}
+        onCancel={() => setResetPasswordVisible(false)}
+        footer={null}
+        width={400}
+      >
+        <Form form={resetPasswordForm} layout="vertical" onFinish={handleResetPasswordSubmit}>
+          <Form.Item 
+            name="password" 
+            label="新密码" 
+            rules={[
+              { required: true, message: '请输入新密码' },
+              { min: 6, message: '密码至少6位' }
+            ]}
+          >
+            <Input.Password placeholder="请输入新密码" />
+          </Form.Item>
+          <Form.Item 
+            name="confirmPassword" 
+            label="确认密码" 
+            dependencies={['password']}
+            rules={[
+              { required: true, message: '请确认密码' },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject(new Error('两次输入的密码不一致'))
+                },
+              }),
+            ]}
+          >
+            <Input.Password placeholder="请再次输入新密码" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={resetPasswordSubmitting} block>
+              确认重置
             </Button>
           </Form.Item>
         </Form>
